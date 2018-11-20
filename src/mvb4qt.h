@@ -2,12 +2,11 @@
 #define MVB4QT_H
 
 
-#include <QtGlobal>
-#include <QObject>
-#include <QThread>
-#include "qmvbcard.h"
 #include "qabstractmvbdriver.h"
 #include "qmvbport.h"
+#include "qmvbprotocol.h"
+#include "qsimulatemvbdriver.h"
+#include "qmvbcard.h"
 
 namespace Mvb4Qt
 {

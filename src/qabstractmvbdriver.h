@@ -8,10 +8,11 @@
 class QAbstractMvbDriver
 {
 public:
-    virtual bool start(QMvbCard &card) = 0;
-    virtual bool stop(QMvbCard &card) = 0;
-    virtual bool configure(QMvbPort &card) = 0;
-    virtual bool updatePort(QMvbPort &port) = 0;
+    QAbstractMvbDriver();
+    virtual bool start(const QMvbCard *card) = 0;
+    virtual bool stop(const QMvbCard *card) = 0;
+    virtual bool configure(const QMvbCard *card) = 0;
+    virtual bool updatePort(QMvbPort *port) = 0;
     virtual QString getVersion() const = 0;
 };
 

@@ -1,7 +1,17 @@
 #include "qmvbport.h"
 
-QMvbPort::QMvbPort()
+QMvbPort::QMvbPort(const qint16 number, const enum MvbPortType type, const quint16 cycle, QString group)
 {
+    this->number = number;
+    this->type = type;
+    this->cycle = cycle;
+    this->group = group;
+
+    if (this->type == Mvb4Qt::MvbSourcePort)
+    {
+        this->refresh = cycle;
+    }
+
     this->clear();
 }
 
@@ -10,19 +20,9 @@ qint16 QMvbPort::getNumber() const
     return this->number;
 }
 
-void QMvbPort::setNumber(const qint16 number)
-{
-    this->number = number;
-}
-
 enum MvbPortType QMvbPort::getType() const
 {
     return this->type;
-}
-
-void QMvbPort::setType(const enum MvbPortType type)
-{
-    this->type = type;
 }
 
 qint16 QMvbPort::getSize() const
@@ -30,19 +30,9 @@ qint16 QMvbPort::getSize() const
     return this->size;
 }
 
-void QMvbPort::setSize(const qint16 size)
-{
-    this->size = size;
-}
-
 quint16 QMvbPort::getCycle() const
 {
     return this->cycle;
-}
-
-void QMvbPort::setCycle(const quint16 cycle)
-{
-    this->cycle = cycle;
 }
 
 quint16 QMvbPort::getRefresh() const
@@ -77,9 +67,4 @@ void QMvbPort::clear()
 QString QMvbPort::getGroup() const
 {
     return group;
-}
-
-QString QMvbPort::setGroup(QString group)
-{
-    this->group = group;
 }
