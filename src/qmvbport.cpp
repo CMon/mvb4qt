@@ -1,6 +1,6 @@
 #include "qmvbport.h"
 
-QMvbPort::QMvbPort(const qint16 number, const enum MvbPortType type, const quint16 cycle, QString group)
+QMvbPort::QMvbPort(const qint16 number, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
     this->number = number;
     this->type = type;
@@ -20,7 +20,7 @@ qint16 QMvbPort::getNumber() const
     return this->number;
 }
 
-enum MvbPortType QMvbPort::getType() const
+Mvb4Qt::MvbPortType QMvbPort::getType() const
 {
     return this->type;
 }

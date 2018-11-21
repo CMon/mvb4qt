@@ -28,7 +28,8 @@ SOURCES += \
         widget.cpp
 
 HEADERS += \
-        widget.h
+        widget.h \
+    mvb4qt.h
 
 FORMS += \
         widget.ui

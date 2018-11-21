@@ -4,8 +4,10 @@
 
 #include <QTime>
 #include "mvb4qt.h"
+#include "qmvbcard.h"
+#include "qabstractmvbdriver.h"
 
-class QSimulateMvbDriver : QAbstractMvbDriver
+class QSimulateMvbDriver : public QAbstractMvbDriver
 {
 public:
     QSimulateMvbDriver();

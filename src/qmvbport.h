@@ -1,17 +1,17 @@
 #ifndef QMVBPORT_H
 #define QMVBPORT_H
 
+#include <QObject>
 #include "mvb4qt.h"
-#include "qobject.h"
-//using Mvb4Qt;
 
-class QMvbPort: QObject
+
+class QMvbPort
 {
 public:
-    QMvbPort(const qint16 number, const enum MvbPortType type, const quint16 cycle, QString group);
-    ~QMvbPort();
+    QMvbPort(const qint16 number, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group);
+    // ~QMvbPort();
     qint16 getNumber() const;
-    enum MvbPortType getType() const;
+    Mvb4Qt::MvbPortType getType() const;
     qint16 getSize() const;
     quint16 getCycle() const;
     quint16 getRefresh() const;
@@ -23,7 +23,7 @@ public:
 
 private:
     qint16 number; // the port number
-    enum MvbPortType type; // the source port or the sink port
+    Mvb4Qt::MvbPortType type; // the source port or the sink port
     qint16 size;    // the port size
     quint16 cycle;   // the feature cycle
     quint16 refresh; // the refresh time;

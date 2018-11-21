@@ -19,21 +19,21 @@ QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol)
     this->bufferSize = Mvb4Qt::MaxMvbBuffer;
     this->state = Mvb4Qt::MvbCardConfigure;
     this->interval = 100;
-    this->moveToThread(&(this->thread()));
+    this->moveToThread(&(this->thread));
     this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()));
 }
 
-QMvbCard::~QMvbCard()
-{
-    delete this->driver;
-    delete this->protocol;
+    //QMvbCard::~QMvbCard()
+    //{
+    //    delete this->driver;
+    //    delete this->protocol;
 
-    foreach (quint16 number, this->portMap.keys())
-    {
-        delete this->portMap[number];
-        this->portMap.remove(number);
-    }
-}
+    //    foreach (quint16 number, this->portMap.keys())
+    //    {
+    //        delete this->portMap[number];
+    //        this->portMap.remove(number);
+    //    }
+    //}
 
 qint32 QMvbCard::getInterval() const
 {
@@ -86,7 +86,7 @@ bool QMvbCard::removePort(const qint16 number)
     }
 }
 
-bool QMvbCard::addPort(const qint16 number, const enum MvbPortType type, const quint16 cycle, QString group)
+bool QMvbCard::addPort(const qint16 number, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
     if (this->state == Mvb4Qt::MvbCardStart)
     {
@@ -109,17 +109,17 @@ quint16 QMvbCard::getDeviceId() const
     return this->deviceId;
 }
 
-enum MvbPhyMode QMvbCard::getPhyMode() const
+Mvb4Qt::MvbPhyMode QMvbCard::getPhyMode() const
 {
     return this->phyMode;
 }
 
-enum MvbBufferSize QMvbCard::getBufferSize() const
+Mvb4Qt::MvbBufferSize QMvbCard::getBufferSize() const
 {
     return this->bufferSize;
 }
 
-enum MvbCardState QMvbCard::getState() const
+Mvb4Qt::MvbCardState QMvbCard::getState() const
 {
     return this->state;
 }
@@ -129,21 +129,21 @@ void QMvbCard::setDeviceId(quint16 deviceId)
     this->deviceId = deviceId;
 }
 
-void QMvbCard::setPhyMode(const enum MvbPhyMode phyMode)
+void QMvbCard::setPhyMode(const Mvb4Qt::MvbPhyMode phyMode)
 {
     this->phyMode = phyMode;
 }
 
-void QMvbCard::getBufferSize(const enum MvbBufferSize bufferSize)
+void QMvbCard::getBufferSize(const Mvb4Qt::MvbBufferSize bufferSize)
 {
     this->bufferSize = bufferSize;
 }
 
-void QMvbCard::getState(const enum MvbCardState state)
+void QMvbCard::getState(const Mvb4Qt::MvbCardState state)
 {
     this->state = state;
 }
-bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit) const
+bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit)
 {
     if (this->portMap.contains(number))
     {
@@ -158,7 +158,7 @@ bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit)
     }
 }
 
-void QMvbCard::setBool(const qint16 number, const quint8 byte, quint8 bit, const bool value) const
+void QMvbCard::setBool(const qint16 number, const quint8 byte, quint8 bit, const bool value)
 {
     if (this->portMap.contains(number))
     {
@@ -172,7 +172,7 @@ void QMvbCard::setBool(const qint16 number, const quint8 byte, quint8 bit, const
     }
 }
 
-qint8 QMvbCard::getQint8(const qint16 number, const quint8 byte) const
+qint8 QMvbCard::getQint8(const qint16 number, const quint8 byte)
 {
     if (this->portMap.contains(number))
     {
@@ -201,7 +201,7 @@ void QMvbCard::setQint8(const qint16 number, const quint8 byte, const qint8 valu
     }
 }
 
-qint16 QMvbCard::getQint16(const qint16 number, const quint8 byte) const
+qint16 QMvbCard::getQint16(const qint16 number, const quint8 byte)
 {
     if (this->portMap.contains(number))
     {
@@ -230,7 +230,7 @@ void QMvbCard::setQint16(const qint16 number, const quint8 byte, const qint16 va
     }
 }
 
-qint32 QMvbCard::getQint32(const qint16 number, const quint8 byte) const
+qint32 QMvbCard::getQint32(const qint16 number, const quint8 byte)
 {
     if (this->portMap.contains(number))
     {
@@ -259,7 +259,7 @@ void QMvbCard::setQint32(const qint16 number, const quint8 byte, const qint32 va
     }
 }
 
-quint8 QMvbCard::getQuint8(const qint16 number, const quint8 byte) const
+quint8 QMvbCard::getQuint8(const qint16 number, const quint8 byte)
 {
     if (this->portMap.contains(number))
     {
@@ -288,7 +288,7 @@ void QMvbCard::setQuint8(const qint16 number, const quint8 byte, const quint8 va
     }
 }
 
-quint16 QMvbCard::getQuint16(const qint16 number, const quint8 byte) const
+quint16 QMvbCard::getQuint16(const qint16 number, const quint8 byte)
 {
     if (this->portMap.contains(number))
     {
@@ -317,7 +317,7 @@ void QMvbCard::setQuint16(const qint16 number, const quint8 byte, const quint16 
     }
 }
 
-quint32 QMvbCard::getQuint32(const qint16 number, const quint8 byte) const
+quint32 QMvbCard::getQuint32(const qint16 number, const quint8 byte)
 {
     if (this->portMap.contains(number))
     {
@@ -369,13 +369,13 @@ void QMvbCard::updateMvbSlot()
 {
     foreach(QMvbPort *port, this->portMap.values())
     {
-        if (port->type == Mvb4Qt::MvbSourcePort)
+        if (port->getType() == Mvb4Qt::MvbSourcePort)
         {
             QReadLocker loker(&(this->lock));
 
             this->driver->updatePort(port);
         }
-        else if (port->type == Mvb4Qt::MvbSinkPort)
+        else if (port->getType() == Mvb4Qt::MvbSinkPort)
         {
             QWriteLocker loker(&(this->lock));
 
