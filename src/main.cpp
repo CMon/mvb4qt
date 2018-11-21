@@ -1,5 +1,8 @@
 #include <QCoreApplication>
 #include "mvb4qt.h"
+#include "qmvbcard.h"
+#include "qsimulatemvbdriver.h"
+#include "qmvbprotocol.h"
 
 int main(int argc, char *argv[])
 {

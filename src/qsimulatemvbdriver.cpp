@@ -7,30 +7,28 @@ QSimulateMvbDriver::QSimulateMvbDriver()
 
 const QString QSimulateMvbDriver::version = "1.0.0";
 
-bool QSimulateMvbDriver::start(QMvbCard *card)
-{
-    this->state = Mvb4Qt::MvbCardStart;
-
-    return true;
-}
-
-bool QSimulateMvbDriver::stop(QMvbCard *card)
+bool QSimulateMvbDriver::start(const QMvbCard *card)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::configure(QMvbCard *card)
+bool QSimulateMvbDriver::stop(const QMvbCard *card)
+{
+    return true;
+}
+
+bool QSimulateMvbDriver::configure(const QMvbCard *card)
 {
     return true;
 }
 
 bool QSimulateMvbDriver::updatePort(QMvbPort *port)
 {
-    if (port == null)
+    if (port == nullptr)
     {
         return false;
     }
-    else if (port->type == Mvb4Qt::MvbSourcePort)
+    else if (port->getType() == Mvb4Qt::MvbSourcePort)
     {
         return true;
     }
@@ -39,14 +37,14 @@ bool QSimulateMvbDriver::updatePort(QMvbPort *port)
         quint8 *data = port->getData();
 
         // update the data of source port
-        for (int i = 0; i < port->size; i ++)
+        for (int i = 0; i < port->getSize(); i ++)
         {
-            qsrand(QTime::currentTime());
+            qsrand(QTime::currentTime().second() + i);
             *(data + i) = qrand() % 256;
         }
 
         // update the refresh time
-        qsrand(QTime::currentTime());
+        qsrand(QTime::currentTime().second());
         port->setRefresh(qrand() % port->getCycle());
 
         return true;

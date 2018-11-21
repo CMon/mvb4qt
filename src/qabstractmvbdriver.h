@@ -4,12 +4,13 @@
 #include "mvb4qt.h"
 #include "qmvbport.h"
 #include "qmvbcard.h"
+
 class QMvbCard;
 class QMvbPort;
+
 class QAbstractMvbDriver
 {
 public:
-    QAbstractMvbDriver();
     virtual bool start(const QMvbCard *card) = 0;
     virtual bool stop(const QMvbCard *card) = 0;
     virtual bool configure(const QMvbCard *card) = 0;
