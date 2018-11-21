@@ -8,18 +8,21 @@
 #include <QReadLocker>
 #include <QWriteLocker>
 #include "mvb4qt.h"
-
-using Mvb4Qt;
+#include "QDebug"
+#include "QThread"
+#include "QMutex"
+//using Mvb4Qt;
 
 class QAbstractMvbDriver;
+class QMvbProtocol;
 
 class QMvbCard : QObject
 {
     Q_OBJECT
 
 public:
-    QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol = null) = default;
-
+    QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol = nullptr);
+    ~QMvbCard();
 public:
     bool addSourcePort(const qint16 number, const quint16 cycle, const QString group = "");
     bool addSinkPort(const qint16 number, const quint16 cycle, const QString group = "");
@@ -30,9 +33,9 @@ public:
     enum MvbBufferSize getBufferSize() const;
     enum MvbCardState getState() const;
     void setDeviceId(const quint16 deviceId);
-    enum MvbPhyMode setPhyMode();
-    enum MvbBufferSize getBufferSize();
-    enum MvbCardState getState();
+    void setPhyMode(const enum MvbPhyMode phyMode);
+    void getBufferSize(const enum MvbBufferSize bufferSize);
+    void getState(const enum MvbCardState state);
     qint32 getInterval() const;
     void setInterval(const qint32 interval);
     bool getBool(const qint16 number, const quint8 byte, const quint8 bit) const;
@@ -65,6 +68,8 @@ private:
     QTimer timer;
     QReadWriteLock lock;
 
+    QThread m_thread;
+    QMutex m_Mutex;
 private:
     bool addPort(const qint16 number, const enum MvbPortType, const quint16 cycle, QString group);
 

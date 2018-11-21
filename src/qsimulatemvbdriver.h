@@ -9,11 +9,11 @@ class QSimulateMvbDriver : QAbstractMvbDriver
 {
 public:
     QSimulateMvbDriver();
-    virtual bool start(const QMvbCard *card);
-    virtual bool stop(const QMvbCard *card);
-    virtual bool configure(const QMvbCard *card);
-    virtual bool updatePort(QMvbPort *port);
-    virtual QString getVersion() const;
+    bool start(const QMvbCard *card);
+    bool stop(const QMvbCard *card);
+    bool configure(const QMvbCard *card);
+    bool updatePort(QMvbPort *port);
+    QString getVersion() const;
 
 private:
     const static QString version;   // the driver version

@@ -2,8 +2,8 @@
 #define QMVBPORT_H
 
 #include "mvb4qt.h"
-
-using Mvb4Qt;
+#include "qobject.h"
+//using Mvb4Qt;
 
 class QMvbPort: QObject
 {

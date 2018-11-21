@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QMvbCard *card = QMvbCard(new QSimulateMvbDriver(), new QMvbProtocol());
+    QMvbCard *card =new QMvbCard(new QSimulateMvbDriver(), new QMvbProtocol());
 
     card->addSinkPort(0x01, 128);
     card->addSinkPort(0x02, 256);

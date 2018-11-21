@@ -4,7 +4,8 @@
 #include "mvb4qt.h"
 #include "qmvbport.h"
 #include "qmvbcard.h"
-
+class QMvbCard;
+class QMvbPort;
 class QAbstractMvbDriver
 {
 public:

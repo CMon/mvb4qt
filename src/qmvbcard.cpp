@@ -1,10 +1,10 @@
 #include "qmvbcard.h"
-
-QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol = null)
+#include "qmvbprotocol.h"
+QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol)
 {
     this->driver = driver;
 
-    if (protocol != null)
+    if (protocol != nullptr)
     {
         this->protocol = protocol;
     }
@@ -22,15 +22,15 @@ QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol = null)
     this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()));
 }
 
-QMvbCard::~QMvbCard(QAbstractMvbDriver *driver)
+QMvbCard::~QMvbCard()
 {
     delete this->driver;
     delete this->protocol;
 
-    foreach (quint16 number, this->ports.keys())
+    foreach (quint16 number, this->portMap.keys())
     {
-        delete this->ports[number];
-        this->ports.remove(number);
+        delete this->portMap[number];
+        this->portMap.remove(number);
     }
 }
 
@@ -51,17 +51,17 @@ void QMvbCard::setInterval(const qint32 interval)
     }
 }
 
-bool QMvbCard::addSourcePort(const qint16 number, const quint16 cycle, const QString group = "")
+bool QMvbCard::addSourcePort(const qint16 number, const quint16 cycle, const QString group)
 {
     return this->addPort(number, Mvb4Qt::MvbSourcePort, cycle, group);
 }
 
-bool QMvbCard::addSinkPort(const qint16 number, const quint16 cycle, const QString group = null)
+bool QMvbCard::addSinkPort(const qint16 number, const quint16 cycle, const QString group)
 { 
     return this->addPort(number, Mvb4Qt::MvbSourcePort, cycle, group);
 }
 
-bool QMvbCard::addVirtualPort(const qint16 number, const quint16 cycle, const QString group = null)
+bool QMvbCard::addVirtualPort(const qint16 number, const quint16 cycle, const QString group)
 {   
     return this->addPort(number, Mvb4Qt::MvbVirtualPort, cycle, group);
 }
@@ -72,10 +72,10 @@ bool QMvbCard::removePort(const qint16 number)
     {
         return false;
     }
-    else if (this->ports.contains(number))
+    else if (this->portMap.contains(number))
     {
-        delete this->ports[number];
-        this->ports.remove(number);
+        delete this->portMap[number];
+        this->portMap.remove(number);
 
         return true;
     }
@@ -91,13 +91,13 @@ bool QMvbCard::addPort(const qint16 number, const enum MvbPortType type, const q
     {
         return false;
     }
-    else if (this->ports.contains(number))
+    else if (this->portMap.contains(number))
     {
         return false;
     }
     else
     {
-        this->ports.insert(number, new QMvbPort(number, type, cycle, group));
+        this->portMap.insert(number, new QMvbPort(number, type, cycle, group));
 
         return true;
     }
@@ -142,17 +142,6 @@ void QMvbCard::getState(const enum MvbCardState state)
 {
     this->state = state;
 }
-
-void QMvbCard::setDriver(const QAbstractMvbDriver *driver)
-{
-    this->driver = driver;
-}
-
-void QMvbCard::setProtocol(const QMvbProtocol *protocol)
-{
-    this->protocol = protocol;
-}
-
 bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit) const
 {
     if (this->portMap.contains(number))
@@ -163,6 +152,7 @@ bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit)
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -173,11 +163,11 @@ void QMvbCard::setBool(const qint16 number, const quint8 byte, quint8 bit, const
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setBool(this->portMap[number]->getData(), byte, bit, value);
+        this->protocol->setBool(this->portMap[number]->getData(), byte, bit, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -191,6 +181,7 @@ qint8 QMvbCard::getQint8(const qint16 number, const quint8 byte) const
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -201,11 +192,11 @@ void QMvbCard::setQint8(const qint16 number, const quint8 byte, const qint8 valu
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setQint8(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQint8(this->portMap[number]->getData(), byte, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -219,6 +210,7 @@ qint16 QMvbCard::getQint16(const qint16 number, const quint8 byte) const
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -229,11 +221,11 @@ void QMvbCard::setQint16(const qint16 number, const quint8 byte, const qint16 va
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setQint16(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQint16(this->portMap[number]->getData(), byte, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -247,6 +239,7 @@ qint32 QMvbCard::getQint32(const qint16 number, const quint8 byte) const
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -257,11 +250,11 @@ void QMvbCard::setQint32(const qint16 number, const quint8 byte, const qint32 va
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setQint32(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQint32(this->portMap[number]->getData(), byte, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -275,6 +268,7 @@ quint8 QMvbCard::getQuint8(const qint16 number, const quint8 byte) const
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -285,11 +279,11 @@ void QMvbCard::setQuint8(const qint16 number, const quint8 byte, const quint8 va
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setQuint8(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQuint8(this->portMap[number]->getData(), byte, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -303,6 +297,7 @@ quint16 QMvbCard::getQuint16(const qint16 number, const quint8 byte) const
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -313,11 +308,11 @@ void QMvbCard::setQuint16(const qint16 number, const quint8 byte, const quint16 
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setQuint16(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQuint16(this->portMap[number]->getData(), byte, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -331,6 +326,7 @@ quint32 QMvbCard::getQuint32(const qint16 number, const quint8 byte) const
     }
     else
     {
+        qDebug()<<"No port"<<number<<"in the map";
         return false;
     }
 }
@@ -341,11 +337,11 @@ void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 
     {
         QWriteLocker locker(&(this->lock));
 
-        return this->protocol->setQuint32(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQuint32(this->portMap[number]->getData(), byte, value);
     }
     else
     {
-        return false;
+        qDebug()<<"No port"<<number<<"in the map";
     }
 }
 
@@ -360,7 +356,7 @@ void QMvbCard::stop()
 {
     this->state = Mvb4Qt::MvbCardStop;
     this->timer.stop();
-    this->driver->stop(this)
+    this->driver->stop(this);
 }
 
 void QMvbCard::configure()
