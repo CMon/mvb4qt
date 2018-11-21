@@ -15,9 +15,10 @@ public:
     qint16 getSize() const;
     quint16 getCycle() const;
     quint16 getRefresh() const;
+    QString getGroup() const;
     void setRefresh(const quint16 refresh);
     quint8 *getData() const;
-    void setData(const quint8 data);
+    void setData(const quint8* data);
     void clear();
 
 private:

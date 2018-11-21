@@ -13,6 +13,7 @@
 #include "QMutex"
 //using Mvb4Qt;
 
+class QMvbPort;
 class QAbstractMvbDriver;
 class QMvbProtocol;
 

@@ -1,5 +1,6 @@
 #include "qmvbcard.h"
 #include "qmvbprotocol.h"
+#include "qmvbport.h"
 QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol)
 {
     this->driver = driver;
@@ -345,7 +346,7 @@ void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 
     }
 }
 
-void QMvbCard::start(qint32 interval)
+void QMvbCard::start()
 {
     this->state = Mvb4Qt::MvbCardStart;
     this->timer.start(this->interval);

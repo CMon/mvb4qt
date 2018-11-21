@@ -47,13 +47,17 @@ void QMvbPort::setRefresh(const quint16 refresh)
 
 quint8* QMvbPort::getData() const
 {
-    return this->data;
+    return const_cast<quint8*>(this->data);
 }
 
 void QMvbPort::setData(const quint8 *data)
 {
     delete this->data;
-    this->data = data;
+    for (qint16 i = 0; i < sizeof(this->data); i ++)
+    {
+        this->data[i] = *data;
+        data++;
+    }
 }
 
 void QMvbPort::clear()

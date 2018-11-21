@@ -14,17 +14,17 @@ bool QSimulateMvbDriver::start(QMvbCard *card)
     return true;
 }
 
-bool QSimulateMvbDriver::startstop(QMvbCard *card)
+bool QSimulateMvbDriver::stop(QMvbCard *card)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::startconfigure(QMvbPort *card)
+bool QSimulateMvbDriver::configure(QMvbCard *card)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::startupdatePort(QMvbPort *port)
+bool QSimulateMvbDriver::updatePort(QMvbPort *port)
 {
     if (port == null)
     {
@@ -53,7 +53,7 @@ bool QSimulateMvbDriver::startupdatePort(QMvbPort *port)
     }
 }
 
-QString QSimulateMvbDriver::startgetVersion() const
+QString QSimulateMvbDriver::getVersion() const
 {
     return version;
 }
