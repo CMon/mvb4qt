@@ -14,6 +14,7 @@ QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
     this->interval = 100;
     this->moveToThread(&(this->thread));
     this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()));
+
 }
 
     //QMvbCard::~QMvbCard()
@@ -341,11 +342,11 @@ void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 
 
 void QMvbCard::start()
 {
+    this->thread.start();
 
     this->state = Mvb4Qt::MvbCardStart;
+    //start cycle for thread function(update)
     this->timer.start(this->interval);
-    qDebug()<<"driver"<<this->driver->start(this);
-    qDebug()<<timer.isActive();
 }
 
 void QMvbCard::stop()
@@ -363,9 +364,9 @@ void QMvbCard::configure()
 
 void QMvbCard::updateMvbSlot()
 {
-
     foreach(QMvbPort *port, this->portMap.values())
     {
+        qDebug()<<port->getNumber()<<port->getCycle()<<QThread::currentThreadId();
         if (port->getType() == Mvb4Qt::MvbSourcePort)
         {
             QReadLocker loker(&(this->lock));
