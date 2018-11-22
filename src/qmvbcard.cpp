@@ -1,18 +1,11 @@
 #include "qmvbcard.h"
 #include "qmvbprotocol.h"
 #include "qmvbport.h"
-QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol)
+QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
 {
     this->driver = driver;
+    this->protocol = protocol;
 
-    if (protocol != nullptr)
-    {
-        this->protocol = protocol;
-    }
-    else
-    {
-        this->protocol = new QMvbProtocol();
-    }
 
     this->deviceId = 1;
     this->phyMode = Mvb4Qt::MvbEmdMode;
@@ -348,9 +341,11 @@ void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 
 
 void QMvbCard::start()
 {
+
     this->state = Mvb4Qt::MvbCardStart;
     this->timer.start(this->interval);
-    this->driver->start(this);
+    qDebug()<<"driver"<<this->driver->start(this);
+    qDebug()<<timer.isActive();
 }
 
 void QMvbCard::stop()
@@ -362,11 +357,13 @@ void QMvbCard::stop()
 
 void QMvbCard::configure()
 {
+    this->driver->configure(this);
     this->state = Mvb4Qt::MvbCardConfigure;
 }
 
 void QMvbCard::updateMvbSlot()
 {
+
     foreach(QMvbPort *port, this->portMap.values())
     {
         if (port->getType() == Mvb4Qt::MvbSourcePort)

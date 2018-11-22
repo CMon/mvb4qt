@@ -12,14 +12,14 @@
 #include "QThread"
 #include "QMutex"
 #include "qabstractmvbdriver.h"
-#include "qmvbprotocol.h"
+#include "qabstractmvbprotocol.h"
 
 class QMvbCard : QObject
 {
     Q_OBJECT
 
 public:
-    QMvbCard(QAbstractMvbDriver *driver, QMvbProtocol *protocol = nullptr);
+    QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
     // ~QMvbCard();
 public:
     bool addSourcePort(const qint16 number, const quint16 cycle, const QString group = "");
@@ -62,7 +62,7 @@ private:
     Mvb4Qt::MvbBufferSize bufferSize;  // the buffer size of mvb device
     Mvb4Qt::MvbCardState state;    // the state of mvb card
     QAbstractMvbDriver *driver;
-    QMvbProtocol *protocol;
+    QAbstractMvbProtocol *protocol;
     QTimer timer;
     QReadWriteLock lock;
 

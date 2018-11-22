@@ -23,8 +23,7 @@ SOURCES += \
     # qavicmvbdriver.cpp \
     # qpixymvbdriver.cpp \
     qsimulatemvbdriver.cpp \
-    qmvbprotocol.cpp \
-    qabstractmvbprotocol.cpp
+    qmvbprotocol.cpp
 
 HEADERS += \
     mvb4qt.h \
