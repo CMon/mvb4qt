@@ -1,5 +1,5 @@
-#ifndef QMVBPROTOCOL_H
-#define QMVBPROTOCOL_H
+#ifndef QLITTLEENDIANPROTOCOL_H
+#define QLITTLEENDIANPROTOCOL_H
 
 #include "mvb4qt.h"
 #include "qobject.h"
@@ -25,4 +25,4 @@ public:
     void setQuint32(quint8 *data, const quint8 byte, const quint32 value);
 };
 
-#endif // QMVBPROTOCOL_H
+#endif // QBIGENDIANPROTOCOL_H

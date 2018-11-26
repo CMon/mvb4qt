@@ -15,6 +15,8 @@ int main(int argc, char *argv[])
     card->addSinkPort(0x02, 8, 256);
     card->addSinkPort(0x03, 16, 512);
     card->addSinkPort(0x04, 32, 1024);
+    card->addSourcePort(0x05, 32, 1024);
+    card->addSourcePort(0x06, 32, 1024);
     // qDebug()<<QThread::currentThreadId();
 
     card->setInterval(2048);

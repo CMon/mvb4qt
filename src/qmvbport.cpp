@@ -51,7 +51,7 @@ quint8* QMvbPort::getData() const
     return const_cast<quint8*>(this->data);
 }
 
-void QMvbPort::setData(const quint8 *data)
+void QMvbPort::setData(quint8 *data)
 {
     delete this->data;
     for (qint16 i = 0; i < sizeof(this->data); i ++)
