@@ -22,9 +22,9 @@ public:
     QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
     // ~QMvbCard();
 public:
-    bool addSourcePort(const qint16 number, const quint16 cycle, const QString group = "");
-    bool addSinkPort(const qint16 number, const quint16 cycle, const QString group = "");
-    bool addVirtualPort(const qint16 number, const quint16 cycle, const QString group = "");
+    bool addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
+    bool addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
+    bool addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
     bool removePort(const qint16 number);
     quint16 getDeviceId() const;
     Mvb4Qt::MvbPhyMode getPhyMode() const;
@@ -69,7 +69,7 @@ private:
     QThread thread;
     QMutex m_Mutex;
 private:
-    bool addPort(const qint16 number, const Mvb4Qt::MvbPortType, const quint16 cycle, QString group);
+    bool addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType, const quint16 cycle, QString group);
 
 private slots:
     void updateMvbSlot();

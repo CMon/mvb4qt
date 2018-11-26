@@ -1,10 +1,16 @@
 #ifndef QABSTRACTMVBPROTOCOL_H
 #define QABSTRACTMVBPROTOCOL_H
-#include "qobject.h"
 
-class QAbstractMvbProtocol
+
+#include "mvb4qt.h"
+#include <QtGlobal>
+#include <QObject>
+
+class QAbstractMvbProtocol : QObject
 {
 public:
+    QAbstractMvbProtocol();
+    Mvb4Qt::EndianMode getEndianMode() const;
     virtual bool getBool(const quint8 *data, const quint8 byte, const quint8 bit) const = 0;
     virtual void setBool(quint8 *data, const quint8 byte, quint8 bit, const bool value) const = 0;
     virtual qint8 getQint8(const quint8 *data, const quint8 byte) const = 0;
@@ -19,6 +25,9 @@ public:
     virtual void setQuint16(quint8 *data, const quint8 byte, const quint16 value) = 0;
     virtual quint32 getQuint32(const quint8 *data, const quint8 byte) const = 0;
     virtual void setQuint32(quint8 *data, const quint8 byte, const quint32 value) = 0;
+
+protected:
+    Mvb4Qt::EndianMode endianMode;
 };
 
 #endif // QABSTRACTMVBPROTOCOL_H

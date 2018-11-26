@@ -1,15 +1,15 @@
-#include "qmvbprotocol.h"
+#include "qbigendianprotocol.h"
 
-QMvbProtocol::QMvbProtocol()
+QBigEndianProtocol::QBigEndianProtocol()
 {
 
 }
 
-bool QMvbProtocol::getBool(const quint8 *data, const quint8 byte, const quint8 bit) const
+bool QBigEndianProtocol::getBool(const quint8 *data, const quint8 byte, const quint8 bit) const
 {
     if (data != nullptr && byte < 32 && bit < 8)
     {
-        return *(data + byte) & (0x01 << bit) !=0 ? true : false;
+        return *(data + byte) & (0x01 << bit) != 0 ? true : false;
     }
     else
     {
@@ -17,7 +17,7 @@ bool QMvbProtocol::getBool(const quint8 *data, const quint8 byte, const quint8 b
     }
 }
 
-void QMvbProtocol::setBool(quint8 *data, const quint8 byte, quint8 bit, const bool value) const
+void QBigEndianProtocol::setBool(quint8 *data, const quint8 byte, quint8 bit, const bool value) const
 {
     if (data != nullptr && byte < 32 && bit < 8)
     {
@@ -25,7 +25,7 @@ void QMvbProtocol::setBool(quint8 *data, const quint8 byte, quint8 bit, const bo
     }
 }
 
-qint8 QMvbProtocol::getQint8(const quint8 *data, const quint8 byte) const
+qint8 QBigEndianProtocol::getQint8(const quint8 *data, const quint8 byte) const
 {
     if (data != nullptr && byte <= 32 - sizeof(qint8))
     {
@@ -37,7 +37,7 @@ qint8 QMvbProtocol::getQint8(const quint8 *data, const quint8 byte) const
     }
 }
 
-void QMvbProtocol::setQint8(quint8 *data, const quint8 byte, const qint8 value)
+void QBigEndianProtocol::setQint8(quint8 *data, const quint8 byte, const qint8 value)
 {
     if (data != nullptr && byte <= 32 - sizeof(qint8))
     {
@@ -45,7 +45,7 @@ void QMvbProtocol::setQint8(quint8 *data, const quint8 byte, const qint8 value)
     }
 }
 
-qint16 QMvbProtocol::getQint16(const quint8 *data, const quint8 byte) const
+qint16 QBigEndianProtocol::getQint16(const quint8 *data, const quint8 byte) const
 {
     if (data != nullptr && byte <= 32 - sizeof(qint16))
     {
@@ -57,7 +57,7 @@ qint16 QMvbProtocol::getQint16(const quint8 *data, const quint8 byte) const
     }
 }
 
-void QMvbProtocol::setQint16(quint8 *data, const quint8 byte, const qint16 value)
+void QBigEndianProtocol::setQint16(quint8 *data, const quint8 byte, const qint16 value)
 {
     if (data != nullptr && byte <= 32 - sizeof(qint16))
     {
@@ -65,7 +65,7 @@ void QMvbProtocol::setQint16(quint8 *data, const quint8 byte, const qint16 value
     }
 }
 
-qint32 QMvbProtocol::getQint32(const quint8 *data, const quint8 byte) const
+qint32 QBigEndianProtocol::getQint32(const quint8 *data, const quint8 byte) const
 {
     if (data != nullptr && byte <= 32 - sizeof(qint32))
     {
@@ -77,7 +77,7 @@ qint32 QMvbProtocol::getQint32(const quint8 *data, const quint8 byte) const
     }
 }
 
-void QMvbProtocol::setQint32(quint8 *data, const quint8 byte, const qint32 value)
+void QBigEndianProtocol::setQint32(quint8 *data, const quint8 byte, const qint32 value)
 {
     if (data != nullptr && byte <= 32 - sizeof(qint32))
     {
@@ -85,7 +85,7 @@ void QMvbProtocol::setQint32(quint8 *data, const quint8 byte, const qint32 value
     }
 }
 
-quint8 QMvbProtocol::getQuint8(const quint8 *data, const quint8 byte) const
+quint8 QBigEndianProtocol::getQuint8(const quint8 *data, const quint8 byte) const
 {
     if (data != nullptr && byte <= 32 - sizeof(quint8))
     {
@@ -97,7 +97,7 @@ quint8 QMvbProtocol::getQuint8(const quint8 *data, const quint8 byte) const
     }
 }
 
-void QMvbProtocol::setQuint8(quint8 *data, const quint8 byte, const quint8 value)
+void QBigEndianProtocol::setQuint8(quint8 *data, const quint8 byte, const quint8 value)
 {
     if (data != nullptr && byte <= 32 - sizeof(quint8))
     {
@@ -105,7 +105,7 @@ void QMvbProtocol::setQuint8(quint8 *data, const quint8 byte, const quint8 value
     }
 }
 
-quint16 QMvbProtocol::getQuint16(const quint8 *data, const quint8 byte) const
+quint16 QBigEndianProtocol::getQuint16(const quint8 *data, const quint8 byte) const
 {
     if (data != nullptr && byte <= 32 - sizeof(quint16))
     {
@@ -117,7 +117,7 @@ quint16 QMvbProtocol::getQuint16(const quint8 *data, const quint8 byte) const
     }
 }
 
-void QMvbProtocol::setQuint16(quint8 *data, const quint8 byte, const quint16 value)
+void QBigEndianProtocol::setQuint16(quint8 *data, const quint8 byte, const quint16 value)
 {
     if (data != nullptr && byte <= 32 - sizeof(quint16))
     {
@@ -125,7 +125,7 @@ void QMvbProtocol::setQuint16(quint8 *data, const quint8 byte, const quint16 val
     }
 }
 
-quint32 QMvbProtocol::getQuint32(const quint8 *data, const quint8 byte) const
+quint32 QBigEndianProtocol::getQuint32(const quint8 *data, const quint8 byte) const
 {
     if (data != nullptr && byte <= 32 - sizeof(quint32))
     {
@@ -137,7 +137,7 @@ quint32 QMvbProtocol::getQuint32(const quint8 *data, const quint8 byte) const
     }
 }
 
-void QMvbProtocol::setQuint32(quint8 *data, const quint8 byte, const quint32 value)
+void QBigEndianProtocol::setQuint32(quint8 *data, const quint8 byte, const quint32 value)
 {
     if (data != nullptr && byte <= 32 - sizeof(quint32))
     {

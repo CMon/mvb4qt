@@ -1,11 +1,10 @@
 #include "qmvbcard.h"
-#include "qmvbprotocol.h"
+#include "qlittleendianprotocol.h"
 #include "qmvbport.h"
 QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
 {
     this->driver = driver;
     this->protocol = protocol;
-
 
     this->deviceId = 1;
     this->phyMode = Mvb4Qt::MvbEmdMode;
@@ -13,7 +12,7 @@ QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
     this->state = Mvb4Qt::MvbCardConfigure;
     this->interval = 100;
     this->moveToThread(&(this->thread));
-    this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()));
+    this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()), Qt::DirectConnection);
 
 }
 
@@ -46,19 +45,19 @@ void QMvbCard::setInterval(const qint32 interval)
     }
 }
 
-bool QMvbCard::addSourcePort(const qint16 number, const quint16 cycle, const QString group)
+bool QMvbCard::addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
 {
-    return this->addPort(number, Mvb4Qt::MvbSourcePort, cycle, group);
+    return this->addPort(number, size, Mvb4Qt::MvbSourcePort, cycle, group);
 }
 
-bool QMvbCard::addSinkPort(const qint16 number, const quint16 cycle, const QString group)
+bool QMvbCard::addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
 { 
-    return this->addPort(number, Mvb4Qt::MvbSourcePort, cycle, group);
+    return this->addPort(number, size, Mvb4Qt::MvbSinkPort, cycle, group);
 }
 
-bool QMvbCard::addVirtualPort(const qint16 number, const quint16 cycle, const QString group)
+bool QMvbCard::addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
 {   
-    return this->addPort(number, Mvb4Qt::MvbVirtualPort, cycle, group);
+    return this->addPort(number, size, Mvb4Qt::MvbVirtualPort, cycle, group);
 }
 
 bool QMvbCard::removePort(const qint16 number)
@@ -80,7 +79,7 @@ bool QMvbCard::removePort(const qint16 number)
     }
 }
 
-bool QMvbCard::addPort(const qint16 number, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
+bool QMvbCard::addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
     if (this->state == Mvb4Qt::MvbCardStart)
     {
@@ -92,7 +91,7 @@ bool QMvbCard::addPort(const qint16 number, const Mvb4Qt::MvbPortType type, cons
     }
     else
     {
-        this->portMap.insert(number, new QMvbPort(number, type, cycle, group));
+        this->portMap.insert(number, new QMvbPort(number, size, type, cycle, group));
 
         return true;
     }
@@ -366,7 +365,6 @@ void QMvbCard::updateMvbSlot()
 {
     foreach(QMvbPort *port, this->portMap.values())
     {
-        qDebug()<<port->getNumber()<<port->getCycle()<<QThread::currentThreadId();
         if (port->getType() == Mvb4Qt::MvbSourcePort)
         {
             QReadLocker loker(&(this->lock));
@@ -379,5 +377,21 @@ void QMvbCard::updateMvbSlot()
 
             this->driver->updatePort(port);
         }
+    }
+
+    // debug mode, may add a flag to active this function later
+    foreach(QMvbPort *port, this->portMap.values())
+    {
+        QString info;
+
+        info.append(QString::number(port->getNumber(), 16));
+        info.append(":");
+
+        for (int i = 0; i < port->getSize(); i ++)
+        {
+            info.append(QString::number(*(port->getData() + i), 16));
+        }
+
+        qDebug() << info << QThread::currentThreadId();
     }
 }

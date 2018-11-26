@@ -31,6 +31,12 @@ namespace Mvb4Qt
         MvbCardStop,
         MvbCardConfigure
     };
+
+    enum EndianMode
+    {
+        BigEndian,
+        LittenEndian
+    };
 }
 
 #endif // MVB4QT_H

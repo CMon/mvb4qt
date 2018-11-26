@@ -11,6 +11,7 @@ class QSimulateMvbDriver : public QAbstractMvbDriver
 {
 public:
     QSimulateMvbDriver();
+    ~QSimulateMvbDriver();
     bool start(const QMvbCard *card);
     bool stop(const QMvbCard *card);
     bool configure(const QMvbCard *card);

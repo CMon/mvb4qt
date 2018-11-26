@@ -23,7 +23,9 @@ SOURCES += \
     # qavicmvbdriver.cpp \
     # qpixymvbdriver.cpp \
     qsimulatemvbdriver.cpp \
-    qmvbprotocol.cpp
+    qlittleendianprotocol.cpp \
+    qbigendianprotocol.cpp \
+    qabstractmvbprotocol.cpp
 
 HEADERS += \
     mvb4qt.h \
@@ -35,5 +37,6 @@ HEADERS += \
     # qavicmvbdriver.h \
     # qpixymvbdriver.h \
     qsimulatemvbdriver.h \
-    qmvbprotocol.h \
-    qabstractmvbprotocol.h
+    qabstractmvbprotocol.h \
+    qlittleendianprotocol.h \
+    qbigendianprotocol.h

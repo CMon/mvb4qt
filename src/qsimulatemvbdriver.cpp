@@ -2,6 +2,10 @@
 
 QSimulateMvbDriver::QSimulateMvbDriver()
 {
+}
+
+QSimulateMvbDriver::~QSimulateMvbDriver()
+{
 
 }
 
@@ -39,12 +43,12 @@ bool QSimulateMvbDriver::updatePort(QMvbPort *port)
         // update the data of source port
         for (int i = 0; i < port->getSize(); i ++)
         {
-            qsrand(QTime::currentTime().second() + i);
+            qsrand(QTime(0,0,0).secsTo(QTime::currentTime()) + i + port->getNumber());
             *(data + i) = qrand() % 256;
         }
 
         // update the refresh time
-        qsrand(QTime::currentTime().second());
+        qsrand(QTime(0,0,0).secsTo(QTime::currentTime()) + port->getNumber());
         port->setRefresh(qrand() % port->getCycle());
 
         return true;

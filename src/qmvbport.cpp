@@ -1,8 +1,9 @@
 #include "qmvbport.h"
 
-QMvbPort::QMvbPort(const qint16 number, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
+QMvbPort::QMvbPort(const qint16 number, const quint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
     this->number = number;
+    this->size = size;
     this->type = type;
     this->cycle = cycle;
     this->group = group;

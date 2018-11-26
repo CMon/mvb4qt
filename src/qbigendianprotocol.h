@@ -1,13 +1,12 @@
-#ifndef QMVBPROTOCOL_H
-#define QMVBPROTOCOL_H
+#ifndef QBIGENDIANPROTOCOL_H
+#define QBIGENDIANPROTOCOL_H
 
-#include "mvb4qt.h"
-#include "qobject.h"
 #include "qabstractmvbprotocol.h"
-class QMvbProtocol: public QAbstractMvbProtocol
+
+class QBigEndianProtocol : QAbstractMvbProtocol
 {
 public:
-    QMvbProtocol();
+    QBigEndianProtocol();
     bool getBool(const quint8 *data, const quint8 byte, const quint8 bit) const;
     void setBool(quint8 *data, const quint8 byte, quint8 bit, const bool value) const;
     qint8 getQint8(const quint8 *data, const quint8 byte) const;
@@ -24,4 +23,4 @@ public:
     void setQuint32(quint8 *data, const quint8 byte, const quint32 value);
 };
 
-#endif // QMVBPROTOCOL_H
+#endif // QBIGENDIANPROTOCOL_H
