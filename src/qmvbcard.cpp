@@ -389,7 +389,8 @@ void QMvbCard::updateMvbSlot()
 
         for (int i = 0; i < port->getSize(); i ++)
         {
-            info.append(QString::number(*(port->getData() + i), 16));
+            // info.append(QString::number(*(port->getData() + i), 16));
+            info.append(QString::number(this->getQuint8(port->getNumber(), i), 16));
         }
 
         qDebug() << info << QThread::currentThreadId();

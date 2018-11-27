@@ -1,6 +1,8 @@
 #ifndef QBIGENDIANPROTOCOL_H
 #define QBIGENDIANPROTOCOL_H
 
+
+#include <QDebug>
 #include "qabstractmvbprotocol.h"
 
 class QBigEndianProtocol : QAbstractMvbProtocol
@@ -21,6 +23,12 @@ public:
     void setQuint16(quint8 *data, const quint8 byte, const quint16 value);
     quint32 getQuint32(const quint8 *data, const quint8 byte) const;
     void setQuint32(quint8 *data, const quint8 byte, const quint32 value);
+
+private:
+    template <typename T>
+    T getValue(const quint8 *data, const quint8 byte) const;
+    template <typename T>
+    void setValue(const quint8 *data, const quint8 byte, const T value) const;
 };
 
 #endif // QBIGENDIANPROTOCOL_H

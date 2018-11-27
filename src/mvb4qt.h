@@ -39,4 +39,6 @@ namespace Mvb4Qt
     };
 }
 
+#define _MVB4QT_LIB_INFO __FILE__ << __LINE__
+
 #endif // MVB4QT_H
