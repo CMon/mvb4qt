@@ -21,8 +21,12 @@ bool QSimulateMvbDriver::stop(const QMvbCard *card)
     return true;
 }
 
-bool QSimulateMvbDriver::configure(const QMvbCard *card)
+bool QSimulateMvbDriver::configure(QMvbConfigure *configure)
 {
+    configure->setDeviceId(0x31);
+    configure->setPhyMode(Mvb4Qt::MvbEmdMode);
+    configure->setState(Mvb4Qt::MvbCardConfigure);
+    configure->setBufferSize(Mvb4Qt::MaxMvbBuffer);
     return true;
 }
 

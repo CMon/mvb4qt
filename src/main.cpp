@@ -9,8 +9,9 @@ int main(int argc, char *argv[])
 
     QCoreApplication a(argc, argv);
 
-    QMvbCard *card =new QMvbCard(new QSimulateMvbDriver(), new QLittleEndianProtocol());
+    QMvbCard *card =new QMvbCard(new QSimulateMvbDriver(),new QMvbConfigure(), new QLittleEndianProtocol());
 
+    card->configure();//configure 能否在addport后面？
     card->addSinkPort(0x01, 4, 128);
     card->addSinkPort(0x02, 8, 256);
     card->addSinkPort(0x03, 16, 512);
@@ -20,7 +21,6 @@ int main(int argc, char *argv[])
     // qDebug()<<QThread::currentThreadId();
 
     card->setInterval(2048);
-    card->configure();
     card->start();
 
     return a.exec();
