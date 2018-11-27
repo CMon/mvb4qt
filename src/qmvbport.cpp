@@ -1,7 +1,18 @@
 #include "qmvbport.h"
 
-QMvbPort::QMvbPort()
+QMvbPort::QMvbPort(const qint16 number, const quint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
+    this->number = number;
+    this->size = size;
+    this->type = type;
+    this->cycle = cycle;
+    this->group = group;
+
+    if (this->type == Mvb4Qt::MvbSourcePort)
+    {
+        this->refresh = cycle;
+    }
+
     this->clear();
 }
 
@@ -10,19 +21,9 @@ qint16 QMvbPort::getNumber() const
     return this->number;
 }
 
-void QMvbPort::setNumber(const qint16 number)
-{
-    this->number = number;
-}
-
-enum MvbPortType QMvbPort::getType() const
+Mvb4Qt::MvbPortType QMvbPort::getType() const
 {
     return this->type;
-}
-
-void QMvbPort::setType(const enum MvbPortType type)
-{
-    this->type = type;
 }
 
 qint16 QMvbPort::getSize() const
@@ -30,19 +31,9 @@ qint16 QMvbPort::getSize() const
     return this->size;
 }
 
-void QMvbPort::setSize(const qint16 size)
-{
-    this->size = size;
-}
-
 quint16 QMvbPort::getCycle() const
 {
     return this->cycle;
-}
-
-void QMvbPort::setCycle(const quint16 cycle)
-{
-    this->cycle = cycle;
 }
 
 quint16 QMvbPort::getRefresh() const
@@ -57,13 +48,17 @@ void QMvbPort::setRefresh(const quint16 refresh)
 
 quint8* QMvbPort::getData() const
 {
-    return this->data;
+    return const_cast<quint8*>(this->data);
 }
 
-void QMvbPort::setData(const quint8 *data)
+void QMvbPort::setData(quint8 *data)
 {
     delete this->data;
-    this->data = data;
+    for (qint16 i = 0; i < sizeof(this->data); i ++)
+    {
+        this->data[i] = *data;
+        data++;
+    }
 }
 
 void QMvbPort::clear()
@@ -72,4 +67,9 @@ void QMvbPort::clear()
     {
         this->data[i] = 0;
     }
+}
+
+QString QMvbPort::getGroup() const
+{
+    return group;
 }

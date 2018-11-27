@@ -2,9 +2,9 @@
 #define QOFFSETMVBPROTOCOL_H
 
 
-#include "qmvbprotocol.h"
+#include "qlittleendianprotocol.h"
 
-class QOffsetMvbProtocol : QMvbProtocol
+class QOffsetMvbProtocol : QAbstractMvbProtocol
 {
 public:
     QOffsetMvbProtocol();

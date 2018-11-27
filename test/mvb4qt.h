@@ -1,7 +1,6 @@
 #ifndef MVB4QT_H
 #define MVB4QT_H
 
-
 namespace Mvb4Qt
 {
     enum MvbPortType
@@ -30,12 +29,6 @@ namespace Mvb4Qt
         MvbCardStart,
         MvbCardStop,
         MvbCardConfigure
-    };
-
-    enum EndianMode
-    {
-        BigEndian,
-        LittenEndian
     };
 }
 

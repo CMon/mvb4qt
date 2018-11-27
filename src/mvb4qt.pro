@@ -18,21 +18,27 @@ SOURCES += \
         main.cpp \
     qmvbport.cpp \
     qmvbcard.cpp \
-    qmvbmanager.cpp \
+    # qmvbmanager.cpp \
     qoffsetmvbprotocol.cpp \
-    qavicmvbdriver.cpp \
-    qpixymvbdriver.cpp \
+    # qavicmvbdriver.cpp \
+    # qpixymvbdriver.cpp \
     qsimulatemvbdriver.cpp \
-    qmvbprotocol.cpp
+    qlittleendianprotocol.cpp \
+    qbigendianprotocol.cpp \
+    qabstractmvbprotocol.cpp \
+    qmvbconfigure.cpp
 
 HEADERS += \
     mvb4qt.h \
     qmvbport.h \
     qabstractmvbdriver.h \
     qmvbcard.h \
-    qmvbmanager.h \
+    # qmvbmanager.h \
     qoffsetmvbprotocol.h \
-    qavicmvbdriver.h \
-    qpixymvbdriver.h \
+    # qavicmvbdriver.h \
+    # qpixymvbdriver.h \
     qsimulatemvbdriver.h \
-    qmvbprotocol.h
+    qabstractmvbprotocol.h \
+    qlittleendianprotocol.h \
+    qbigendianprotocol.h \
+    qmvbconfigure.h
