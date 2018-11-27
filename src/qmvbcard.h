@@ -19,21 +19,14 @@ class QMvbCard : QObject
     Q_OBJECT
 
 public:
-    QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
+    QMvbCard(QAbstractMvbDriver *driver,QMvbConfigure* configure, QAbstractMvbProtocol *protocol = nullptr);
     // ~QMvbCard();
 public:
     bool addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
     bool addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
     bool addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
     bool removePort(const qint16 number);
-    quint16 getDeviceId() const;
-    Mvb4Qt::MvbPhyMode getPhyMode() const;
-    Mvb4Qt::MvbBufferSize getBufferSize() const;
-    Mvb4Qt::MvbCardState getState() const;
-    void setDeviceId(const quint16 deviceId);
-    void setPhyMode(const Mvb4Qt::MvbPhyMode phyMode);
-    void getBufferSize(const Mvb4Qt::MvbBufferSize bufferSize);
-    void getState(const Mvb4Qt::MvbCardState state);
+
     qint32 getInterval() const;
     void setInterval(const qint32 interval);
     bool getBool(const qint16 number, const quint8 byte, const quint8 bit);
@@ -57,10 +50,7 @@ public:
 private:
     qint32 interval;
     QMap<qint16, QMvbPort *> portMap; // a map used to store all ports
-    quint16 deviceId;   // the id of mvb device
-    Mvb4Qt::MvbPhyMode phyMode;    // the mode of mvb device
-    Mvb4Qt::MvbBufferSize bufferSize;  // the buffer size of mvb device
-    Mvb4Qt::MvbCardState state;    // the state of mvb card
+    QMvbConfigure* MvbConfigure;   //mvb configure info
     QAbstractMvbDriver *driver;
     QAbstractMvbProtocol *protocol;
     QTimer timer;

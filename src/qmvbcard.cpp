@@ -1,15 +1,12 @@
 #include "qmvbcard.h"
 #include "qlittleendianprotocol.h"
 #include "qmvbport.h"
-QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
+QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbConfigure *configure, QAbstractMvbProtocol *protocol)
 {
     this->driver = driver;
     this->protocol = protocol;
+    this->MvbConfigure = configure;
 
-    this->deviceId = 1;
-    this->phyMode = Mvb4Qt::MvbEmdMode;
-    this->bufferSize = Mvb4Qt::MaxMvbBuffer;
-    this->state = Mvb4Qt::MvbCardConfigure;
     this->interval = 100;
     this->moveToThread(&(this->thread));
     this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()), Qt::DirectConnection);
@@ -62,7 +59,7 @@ bool QMvbCard::addVirtualPort(const qint16 number, const qint16 size, const quin
 
 bool QMvbCard::removePort(const qint16 number)
 {
-    if (this->state == Mvb4Qt::MvbCardStart)
+    if (this->MvbConfigure->getState() == Mvb4Qt::MvbCardStart)
     {
         return false;
     }
@@ -81,7 +78,7 @@ bool QMvbCard::removePort(const qint16 number)
 
 bool QMvbCard::addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
-    if (this->state == Mvb4Qt::MvbCardStart)
+    if (this->MvbConfigure->getState() == Mvb4Qt::MvbCardStart)
     {
         return false;
     }
@@ -95,46 +92,6 @@ bool QMvbCard::addPort(const qint16 number, const qint16 size, const Mvb4Qt::Mvb
 
         return true;
     }
-}
-
-quint16 QMvbCard::getDeviceId() const
-{
-    return this->deviceId;
-}
-
-Mvb4Qt::MvbPhyMode QMvbCard::getPhyMode() const
-{
-    return this->phyMode;
-}
-
-Mvb4Qt::MvbBufferSize QMvbCard::getBufferSize() const
-{
-    return this->bufferSize;
-}
-
-Mvb4Qt::MvbCardState QMvbCard::getState() const
-{
-    return this->state;
-}
-
-void QMvbCard::setDeviceId(quint16 deviceId)
-{
-    this->deviceId = deviceId;
-}
-
-void QMvbCard::setPhyMode(const Mvb4Qt::MvbPhyMode phyMode)
-{
-    this->phyMode = phyMode;
-}
-
-void QMvbCard::getBufferSize(const Mvb4Qt::MvbBufferSize bufferSize)
-{
-    this->bufferSize = bufferSize;
-}
-
-void QMvbCard::getState(const Mvb4Qt::MvbCardState state)
-{
-    this->state = state;
 }
 bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit)
 {
@@ -343,22 +300,21 @@ void QMvbCard::start()
 {
     this->thread.start();
 
-    this->state = Mvb4Qt::MvbCardStart;
+    this->MvbConfigure->setState(Mvb4Qt::MvbCardStart);
     //start cycle for thread function(update)
     this->timer.start(this->interval);
 }
 
 void QMvbCard::stop()
 {
-    this->state = Mvb4Qt::MvbCardStop;
     this->timer.stop();
+    this->MvbConfigure->setState(Mvb4Qt::MvbCardStop);
     this->driver->stop(this);
 }
 
 void QMvbCard::configure()
 {
-    this->driver->configure(this);
-    this->state = Mvb4Qt::MvbCardConfigure;
+    this->driver->configure(this->MvbConfigure);
 }
 
 void QMvbCard::updateMvbSlot()

@@ -14,7 +14,7 @@ public:
     ~QSimulateMvbDriver();
     bool start(const QMvbCard *card);
     bool stop(const QMvbCard *card);
-    bool configure(const QMvbCard *card);
+    bool configure(QMvbConfigure *card);
     bool updatePort(QMvbPort *port);
     QString getVersion() const;
 

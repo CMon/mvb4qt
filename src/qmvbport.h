@@ -18,7 +18,7 @@ public:
     QString getGroup() const;
     void setRefresh(const quint16 refresh);
     quint8 *getData() const;
-    void setData(const quint8* data);
+    void setData(quint8* data);
     void clear();
 
 private:
