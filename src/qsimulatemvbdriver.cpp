@@ -48,7 +48,7 @@ bool QSimulateMvbDriver::updatePort(QMvbPort *port)
         // update the data of source port
         for (int i = 0; i < port->getSize(); i ++)
         {
-            qsrand(QTime(0,0,0).secsTo(QTime::currentTime()) + i + port->getNumber());
+            qsrand(QTime(0,0,0).secsTo(QTime::currentTime()) + i * 100 + port->getNumber());
             *(data + i) = qrand() % 256;
         }
 
