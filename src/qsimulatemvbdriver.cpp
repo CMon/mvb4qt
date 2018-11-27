@@ -34,12 +34,6 @@ bool QSimulateMvbDriver::updatePort(QMvbPort *port)
     }
     else if (port->getType() == Mvb4Qt::MvbSourcePort)
     {
-        quint8* data = port->getData();
-        for (quint8 i = 0; i < port->getSize(); i ++)
-        {
-            *data = i;
-            data++;
-        }
 
         return true;
     }
