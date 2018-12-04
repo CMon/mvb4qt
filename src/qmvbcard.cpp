@@ -1,6 +1,7 @@
 #include "qmvbcard.h"
 #include "qlittleendianprotocol.h"
 #include "qmvbport.h"
+
 QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbConfigure *configure, QAbstractMvbProtocol *protocol)
 {
     this->driver = driver;
@@ -13,17 +14,24 @@ QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbConfigure *configure, QAbstra
 
 }
 
-    //QMvbCard::~QMvbCard()
-    //{
-    //    delete this->driver;
-    //    delete this->protocol;
+QMvbCard::~QMvbCard()
+{
+    if (this->driver != nullptr)
+    {
+        delete this->driver;
+    }
 
-    //    foreach (quint16 number, this->portMap.keys())
-    //    {
-    //        delete this->portMap[number];
-    //        this->portMap.remove(number);
-    //    }
-    //}
+    if (this->protocol != nullptr)
+    {
+        delete this->protocol;
+    }
+
+    foreach (quint16 number, this->portMap.keys())
+    {
+        delete this->portMap[number];
+        this->portMap.remove(number);
+    }
+}
 
 qint32 QMvbCard::getInterval() const
 {
@@ -351,4 +359,14 @@ void QMvbCard::updateMvbSlot()
 
         qDebug() << info << QThread::currentThreadId();
     }
+}
+
+const QString &QMvbCard::getName() const
+{
+    return this->name;
+}
+
+void QMvbCard::setName(const QString name)
+{
+    return this->name = name;
 }

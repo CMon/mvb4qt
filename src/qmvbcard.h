@@ -13,14 +13,20 @@
 #include "QMutex"
 #include "qabstractmvbdriver.h"
 #include "qabstractmvbprotocol.h"
+#include "qmvbcardmanager.h"
+#include "qmvbregister.h"
 
 class QMvbCard : QObject
 {
     Q_OBJECT
 
+    friend class QMvbCardManager;
+
 public:
+    QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
     QMvbCard(QAbstractMvbDriver *driver,QMvbConfigure* configure, QAbstractMvbProtocol *protocol = nullptr);
-    // ~QMvbCard();
+    ~QMvbCard();
+
 public:
     bool addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
     bool addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
@@ -51,11 +57,12 @@ private:
     qint32 interval;
     QMap<qint16, QMvbPort *> portMap; // a map used to store all ports
     QMvbConfigure* MvbConfigure;   //mvb configure info
+    QMvbRegister mvbRegister;
     QAbstractMvbDriver *driver;
     QAbstractMvbProtocol *protocol;
     QTimer timer;
     QReadWriteLock lock;
-
+    QString name;
     QThread thread;
     QMutex m_Mutex;
 private:
