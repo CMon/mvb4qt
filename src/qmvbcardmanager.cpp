@@ -30,22 +30,6 @@ QMvbCardManager *QMvbCardManager::getManager()
     }
 }
 
-QMvbCard *QMvbCardManager::addMvbCard(const QString name, QAbstractMvbDriver *driver)
-{
-    if (this->cardMap.contains(name))
-    {
-        qDebug() << "the card name of" << name << "already exists" << _MVB4QT_LIB_INFO;
-
-        return nullptr;
-    }
-    else
-    {
-        this->cardMap.insert(name, new QMvbCard(driver, new QBigEndianProtocol()));
-
-        return this->cardMap[name];
-    }
-}
-
 QMvbCard *QMvbCardManager::addMvbCard(const QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
 {
     if (this->cardMap.contains(name))
@@ -53,6 +37,13 @@ QMvbCard *QMvbCardManager::addMvbCard(const QString name, QAbstractMvbDriver *dr
         qDebug() << "the card name of"  << name << "already exists" << _MVB4QT_LIB_INFO;
 
         return nullptr;
+    }
+    else if (protocol == nullptr)
+    {
+        // If there is no protocol specified, big endian protocol would be applied.
+        this->cardMap.insert(name, new QMvbCard(driver, new QBigEndianProtocol()));
+
+        return this->cardMap[name];
     }
     else
     {
