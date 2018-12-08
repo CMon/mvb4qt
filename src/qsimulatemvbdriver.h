@@ -15,7 +15,7 @@ public:
     virtual bool stop(const QMvbRegister* mvbRegister);
     virtual bool configure(const QMvbRegister* mvbRegister);
     virtual bool updatePort(const QMvbRegister* mvbRegister, QMvbPort *port);
-    virtual QString getVersion() const = 0;
+    virtual QString getVersion() const;
 };
 
 #endif // QSIMULATEMVBDRIVER_H

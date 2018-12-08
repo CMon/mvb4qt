@@ -24,7 +24,7 @@ public:
      * Param    void
      * Return   The pointer of manager
      */
-    QMvbCardManager *getManager();
+    static QMvbCardManager *getManager();
 
     /*
      * Brief    Add a mvb card to the manager.

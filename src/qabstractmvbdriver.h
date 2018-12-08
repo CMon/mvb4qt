@@ -5,6 +5,8 @@
 #include "qmvbport.h"
 #include "qmvbcard.h"
 #include "qmvbconfigure.h"
+#include "qmvbregister.h"
+
 class QMvbCard;
 class QMvbPort;
 class QMvbConfigure;

@@ -37,6 +37,13 @@ public:
     QList<qint16> getPortNumberList(const Mvb4Qt::MvbPortType type) const;
 
     /*
+     * Brief    Get all mvb ports.
+     * Param    void
+     * Return   Return a list of mvb ports.
+     */
+    QList<QMvbPort *> getPortList() const;
+
+    /*
      * Brief    Get the mvb port by the port number, if the port number doesn't exist, return null.
      * Param    "number" is the number of the port you want to get.
      * Return   Return the pointer of the mvb port.
@@ -66,6 +73,13 @@ public:
      * Return   Return true if the mvb port exists, or return false.
      */
     bool containPort(const qint16 number) const;
+
+    /*
+     * Brief    Remove the port of the number specified.
+     * Param    "number" is the type of the mvb port number.
+     * Return   Return true if remove successfully, or return false.
+     */
+    bool removePort(const qint16 number);
 
     qint16 getMinDeviceId() const;
     void setMinDeviceId(const qint16 minDeviceId);

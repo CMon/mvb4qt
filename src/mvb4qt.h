@@ -28,8 +28,7 @@ namespace Mvb4Qt
     enum MvbCardState
     {
         MvbCardStart,
-        MvbCardStop,
-        MvbCardConfigure
+        MvbCardStop
     };
 
     enum EndianMode

@@ -69,7 +69,7 @@ private:
     QThread thread;
 
 private slots:
-    void updateMvbSlot();
+    void updateCard();
 };
 
 #endif // QMVBCARD_H

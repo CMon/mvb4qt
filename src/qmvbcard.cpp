@@ -12,7 +12,7 @@ QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtoco
     this->protocol = protocol;
 
     this->timer = new QTimer(this);
-    this->timer->setInterval(100);  // default value is 100ms
+    this->timer->setInterval(100);  // the default value is 100ms
     this->connect(timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()), Qt::AutoConnection);
 
     this->moveToThread(&(this->thread));
@@ -249,49 +249,100 @@ void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 
 
 void QMvbCard::start()
 {
-    this->MvbConfigure->setState(Mvb4Qt::MvbCardStart);
+    if (this->mvbRegister->getState() == Mvb4Qt::MvbCardStart)
+    {
+        qDebug() << "the mvb card named" << this->mvbRegister->getName()
+                    << "has already started..." << _MVB4QT_LIB_INFO; ;
 
-    this->thread.start();
-    this->timer.start(this->interval);
-    this->driver->start(this->mvbRegister);
+        return;
+    }
 
-    qDebug() << ""
+    if (this->driver->start(this->mvbRegister))
+    {
+        this->mvbRegister->setState(Mvb4Qt::MvbCardStart);
+        this->thread.start();
+        this->timer->start();
+
+        qDebug() << "the mvb card named" << this->mvbRegister->getName()
+                    << "started..." << _MVB4QT_LIB_INFO; ;
+    }
+    else
+    {
+        qDebug() << "fail starting the mvb card named" << this->mvbRegister->getName()
+                    << _MVB4QT_LIB_INFO;
+    }
 }
 
 void QMvbCard::stop()
 {
-    this->timer.stop();
-    this->thread.terminate();
+    if (this->mvbRegister->getState() == Mvb4Qt::MvbCardStop)
+    {
+        qDebug() << "the mvb card named" << this->mvbRegister->getName()
+                    << "is not working...";
 
-    this->MvbConfigure->setState(Mvb4Qt::MvbCardStop);
-    this->driver->stop(this);
+        return;
+    }
+
+    if (this->driver->stop(this->mvbRegister))
+    {
+        this->mvbRegister->setState(Mvb4Qt::MvbCardStop);
+        this->timer->stop();
+        this->thread.terminate();
+
+        qDebug() << "the mvb card named" << this->mvbRegister->getName()
+                    << "stopped..." << _MVB4QT_LIB_INFO;
+    }
+    else
+    {
+        qDebug() << "fail stopping the mvb card named" << this->mvbRegister->getName()
+                    << "stopped..." << _MVB4QT_LIB_INFO;
+    }
 }
 
 void QMvbCard::configure()
 {
-    this->driver->configure(this->MvbConfigure);
+    if (this->mvbRegister->getState() == Mvb4Qt::MvbCardStart)
+    {
+         qDebug() << "please stop the mvb card named" << this->mvbRegister->getName()
+                  << "before configuration" << _MVB4QT_LIB_INFO;
+
+         return;
+    }
+
+    if (this->driver->configure(this->mvbRegister))
+    {
+        qDebug() << "configure the mvb card named" << this->mvbRegister->getName()
+                    << "successfully" << _MVB4QT_LIB_INFO;
+
+        return;
+    }
+    else
+    {
+        qDebug() << "fail configuring the mvb card named" << this->mvbRegister->getName()
+                    << "successfully" << _MVB4QT_LIB_INFO;
+    }
 }
 
-void QMvbCard::updateMvbSlot()
+void QMvbCard::updateCard()
 {
-    foreach(QMvbPort *port, this->portMap.values())
+    foreach(QMvbPort *port, this->mvbRegister->getPortList())
     {
         if (port->getType() == Mvb4Qt::MvbSourcePort)
         {
             QReadLocker loker(&(this->lock));
 
-            this->driver->updatePort(port);
+            this->driver->updatePort(this->mvbRegister, port);
         }
         else if (port->getType() == Mvb4Qt::MvbSinkPort)
         {
             QWriteLocker loker(&(this->lock));
 
-            this->driver->updatePort(port);
+            this->driver->updatePort(this->mvbRegister, port);
         }
     }
 
     // debug mode, may add a flag to active this function later
-    foreach(QMvbPort *port, this->portMap.values())
+    foreach(QMvbPort *port, this->mvbRegister->getPortList())
     {
         QString info;
 
@@ -300,7 +351,6 @@ void QMvbCard::updateMvbSlot()
 
         for (int i = 0; i < port->getSize(); i ++)
         {
-            // info.append(QString::number(*(port->getData() + i), 16));
             info.append(QString::number(this->getQuint8(port->getNumber(), i), 16));
         }
 
@@ -308,7 +358,7 @@ void QMvbCard::updateMvbSlot()
     }
 }
 
-QMvbRegister *QMvbCard::mvbRegister()
+QMvbRegister *QMvbCard::getMvbRegister()
 {
     return this->mvbRegister;
 }

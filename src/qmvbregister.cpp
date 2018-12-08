@@ -80,6 +80,11 @@ QList<qint16> QMvbRegister::getPortNumberList(const Mvb4Qt::MvbPortType type) co
     return list;
 }
 
+QList<QMvbPort *> QMvbRegister::getPortList() const
+{
+    return this->portMap.values();
+}
+
 QMvbPort *QMvbRegister::getPort(const qint16 number) const
 {
     if (this->portMap.contains(number))
@@ -99,6 +104,15 @@ QMvbPort *QMvbRegister::getPort(const qint16 number) const
 
 bool QMvbRegister::removePort(const qint16 number)
 {
+    if (this->state == Mvb4Qt::MvbCardStart)
+    {
+        qDebug() <<
+    }
+    else
+    {
+
+    }
+
     if (this->MvbConfigure->getState() == Mvb4Qt::MvbCardStart)
     {
         return false;
