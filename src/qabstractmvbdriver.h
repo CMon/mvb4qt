@@ -12,10 +12,10 @@ class QMvbConfigure;
 class QAbstractMvbDriver
 {
 public:
-    virtual bool start(const QMvbCard *card) = 0;
-    virtual bool stop(const QMvbCard *card) = 0;
-    virtual bool configure(QMvbConfigure *configure) = 0;
-    virtual bool updatePort(QMvbPort *port) = 0;
+    virtual bool start(const QMvbRegister* mvbRegister) = 0;
+    virtual bool stop(const QMvbRegister* mvbRegister) = 0;
+    virtual bool configure(const QMvbRegister* mvbRegister) = 0;
+    virtual bool updatePort(const QMvbRegister* mvbRegister, QMvbPort *port) = 0;
     virtual QString getVersion() const = 0;
 };
 

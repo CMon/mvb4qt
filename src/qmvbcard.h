@@ -16,6 +16,11 @@
 #include "qmvbcardmanager.h"
 #include "qmvbregister.h"
 
+
+/*
+ * The class is the register of the mvb card that is used store almost all information like
+ * device id, mvb ports and physical mode etc.
+ */
 class QMvbCard : QObject
 {
     Q_OBJECT
@@ -23,15 +28,12 @@ class QMvbCard : QObject
     friend class QMvbCardManager;
 
 public:
-    QMvbCard(QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
-    QMvbCard(QAbstractMvbDriver *driver,QMvbConfigure* configure, QAbstractMvbProtocol *protocol = nullptr);
     ~QMvbCard();
 
 public:
-    bool addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
-    bool addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
-    bool addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
+
     bool removePort(const qint16 number);
+    QMvbRegister *getMvbRegister();
 
     qint32 getInterval() const;
     void setInterval(const qint32 interval);
@@ -49,24 +51,22 @@ public:
     void setQuint16(const qint16 number, const quint8 byte, const quint16 value);
     quint32 getQuint32(const qint16 number, const quint8 byte);
     void setQuint32(const qint16 number, const quint8 byte, const quint32 value);
+
+public slots:
     void start();
     void stop();
     void configure();
 
 private:
-    qint32 interval;
-    QMap<qint16, QMvbPort *> portMap; // a map used to store all ports
-    QMvbConfigure* MvbConfigure;   //mvb configure info
-    QMvbRegister mvbRegister;
+    QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
+
+private:
+    QMvbRegister *mvbRegister;
     QAbstractMvbDriver *driver;
     QAbstractMvbProtocol *protocol;
-    QTimer timer;
+    QTimer *timer;
     QReadWriteLock lock;
-    QString name;
     QThread thread;
-    QMutex m_Mutex;
-private:
-    bool addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType, const quint16 cycle, QString group);
 
 private slots:
     void updateMvbSlot();

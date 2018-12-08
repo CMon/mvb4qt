@@ -2,112 +2,55 @@
 #include "qlittleendianprotocol.h"
 #include "qmvbport.h"
 
-QMvbCard::QMvbCard(QAbstractMvbDriver *driver, QMvbConfigure *configure, QAbstractMvbProtocol *protocol)
+QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
 {
+    // the register of this mvb card.
+    this->mvbRegister = new QMvbRegister();
+    this->mvbRegister->setName(name);
+
     this->driver = driver;
     this->protocol = protocol;
-    this->MvbConfigure = configure;
 
-    this->interval = 100;
+    this->timer = new QTimer(this);
+    this->timer->setInterval(100);  // default value is 100ms
+    this->connect(timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()), Qt::AutoConnection);
+
     this->moveToThread(&(this->thread));
-    this->connect(&timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()), Qt::DirectConnection);
-
 }
 
 QMvbCard::~QMvbCard()
 {
-    if (this->driver != nullptr)
-    {
-        delete this->driver;
-    }
-
-    if (this->protocol != nullptr)
-    {
-        delete this->protocol;
-    }
-
-    foreach (quint16 number, this->portMap.keys())
-    {
-        delete this->portMap[number];
-        this->portMap.remove(number);
-    }
+    delete this->driver;
+    delete this->protocol;
+    delete this->timer;
+    delete this->mvbRegister;
 }
 
 qint32 QMvbCard::getInterval() const
 {
-    return this->interval;
+    return this->timer->interval();
 }
 
 void QMvbCard::setInterval(const qint32 interval)
 {
-    if (interval < 100)
+    // if the interval is less than 50ms, set it 50ms.
+    if (interval < 50)
     {
-       this->interval = 100;
+       this->timer->setInterval(50);
     }
     else
     {
-        this->interval = interval;
+        this->timer->setInterval(interval);
     }
 }
 
-bool QMvbCard::addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
-{
-    return this->addPort(number, size, Mvb4Qt::MvbSourcePort, cycle, group);
-}
-
-bool QMvbCard::addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
-{ 
-    return this->addPort(number, size, Mvb4Qt::MvbSinkPort, cycle, group);
-}
-
-bool QMvbCard::addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
-{   
-    return this->addPort(number, size, Mvb4Qt::MvbVirtualPort, cycle, group);
-}
-
-bool QMvbCard::removePort(const qint16 number)
-{
-    if (this->MvbConfigure->getState() == Mvb4Qt::MvbCardStart)
-    {
-        return false;
-    }
-    else if (this->portMap.contains(number))
-    {
-        delete this->portMap[number];
-        this->portMap.remove(number);
-
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-bool QMvbCard::addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
-{
-    if (this->MvbConfigure->getState() == Mvb4Qt::MvbCardStart)
-    {
-        return false;
-    }
-    else if (this->portMap.contains(number))
-    {
-        return false;
-    }
-    else
-    {
-        this->portMap.insert(number, new QMvbPort(number, size, type, cycle, group));
-
-        return true;
-    }
-}
 bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getBool(this->portMap[number]->getData(), byte, bit);
+        return this->protocol->getBool(this->mvbRegister->getPort(number)->getData(), byte, bit);
     }
     else
     {
@@ -118,11 +61,11 @@ bool QMvbCard::getBool(const qint16 number, const quint8 byte, const quint8 bit)
 
 void QMvbCard::setBool(const qint16 number, const quint8 byte, quint8 bit, const bool value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setBool(this->portMap[number]->getData(), byte, bit, value);
+        this->protocol->setBool(this->mvbRegister->getPort(number)->getData(), byte, bit, value);
     }
     else
     {
@@ -132,11 +75,11 @@ void QMvbCard::setBool(const qint16 number, const quint8 byte, quint8 bit, const
 
 qint8 QMvbCard::getQint8(const qint16 number, const quint8 byte)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getQint8(this->portMap[number]->getData(), byte);
+        return this->protocol->getQint8(this->mvbRegister->getPort(number)->getData(), byte);
     }
     else
     {
@@ -147,11 +90,11 @@ qint8 QMvbCard::getQint8(const qint16 number, const quint8 byte)
 
 void QMvbCard::setQint8(const qint16 number, const quint8 byte, const qint8 value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setQint8(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQint8(this->mvbRegister->getPort(number)->getData(), byte, value);
     }
     else
     {
@@ -161,11 +104,11 @@ void QMvbCard::setQint8(const qint16 number, const quint8 byte, const qint8 valu
 
 qint16 QMvbCard::getQint16(const qint16 number, const quint8 byte)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getQint16(this->portMap[number]->getData(), byte);
+        return this->protocol->getQint16(this->mvbRegister->getPort(number)->getData(), byte);
     }
     else
     {
@@ -176,11 +119,11 @@ qint16 QMvbCard::getQint16(const qint16 number, const quint8 byte)
 
 void QMvbCard::setQint16(const qint16 number, const quint8 byte, const qint16 value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setQint16(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQint16(this->mvbRegister->getPort(number)->getData(), byte, value);
     }
     else
     {
@@ -190,11 +133,11 @@ void QMvbCard::setQint16(const qint16 number, const quint8 byte, const qint16 va
 
 qint32 QMvbCard::getQint32(const qint16 number, const quint8 byte)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getQint32(this->portMap[number]->getData(), byte);
+        return this->protocol->getQint32(this->mvbRegister->getPort(number)->getData(), byte);
     }
     else
     {
@@ -205,11 +148,11 @@ qint32 QMvbCard::getQint32(const qint16 number, const quint8 byte)
 
 void QMvbCard::setQint32(const qint16 number, const quint8 byte, const qint32 value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setQint32(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQint32(this->mvbRegister->getPort(number)->getData(), byte, value);
     }
     else
     {
@@ -219,11 +162,11 @@ void QMvbCard::setQint32(const qint16 number, const quint8 byte, const qint32 va
 
 quint8 QMvbCard::getQuint8(const qint16 number, const quint8 byte)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getQuint8(this->portMap[number]->getData(), byte);
+        return this->protocol->getQuint8(this->mvbRegister->getPort(number)->getData(), byte);
     }
     else
     {
@@ -234,11 +177,11 @@ quint8 QMvbCard::getQuint8(const qint16 number, const quint8 byte)
 
 void QMvbCard::setQuint8(const qint16 number, const quint8 byte, const quint8 value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setQuint8(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQuint8(this->mvbRegister->getPort(number)->getData(), byte, value);
     }
     else
     {
@@ -248,11 +191,11 @@ void QMvbCard::setQuint8(const qint16 number, const quint8 byte, const quint8 va
 
 quint16 QMvbCard::getQuint16(const qint16 number, const quint8 byte)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getQuint16(this->portMap[number]->getData(), byte);
+        return this->protocol->getQuint16(this->mvbRegister->getPort(number)->getData(), byte);
     }
     else
     {
@@ -263,11 +206,11 @@ quint16 QMvbCard::getQuint16(const qint16 number, const quint8 byte)
 
 void QMvbCard::setQuint16(const qint16 number, const quint8 byte, const quint16 value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setQuint16(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQuint16(this->mvbRegister->getPort(number)->getData(), byte, value);
     }
     else
     {
@@ -277,11 +220,11 @@ void QMvbCard::setQuint16(const qint16 number, const quint8 byte, const quint16 
 
 quint32 QMvbCard::getQuint32(const qint16 number, const quint8 byte)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QReadLocker locker(&(this->lock));
 
-        return this->protocol->getQuint32(this->portMap[number]->getData(), byte);
+        return this->protocol->getQuint32(this->mvbRegister->getPort(number)->getData(), byte);
     }
     else
     {
@@ -292,11 +235,11 @@ quint32 QMvbCard::getQuint32(const qint16 number, const quint8 byte)
 
 void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 value)
 {
-    if (this->portMap.contains(number))
+    if (this->mvbRegister->containPort(number))
     {
         QWriteLocker locker(&(this->lock));
 
-        this->protocol->setQuint32(this->portMap[number]->getData(), byte, value);
+        this->protocol->setQuint32(this->mvbRegister->getPort(number)->getData(), byte, value);
     }
     else
     {
@@ -306,16 +249,20 @@ void QMvbCard::setQuint32(const qint16 number, const quint8 byte, const quint32 
 
 void QMvbCard::start()
 {
-    this->thread.start();
-
     this->MvbConfigure->setState(Mvb4Qt::MvbCardStart);
-    //start cycle for thread function(update)
+
+    this->thread.start();
     this->timer.start(this->interval);
+    this->driver->start(this->mvbRegister);
+
+    qDebug() << ""
 }
 
 void QMvbCard::stop()
 {
     this->timer.stop();
+    this->thread.terminate();
+
     this->MvbConfigure->setState(Mvb4Qt::MvbCardStop);
     this->driver->stop(this);
 }
@@ -361,12 +308,7 @@ void QMvbCard::updateMvbSlot()
     }
 }
 
-const QString &QMvbCard::getName() const
+QMvbRegister *QMvbCard::mvbRegister()
 {
-    return this->name;
-}
-
-void QMvbCard::setName(const QString name)
-{
-    return this->name = name;
+    return this->mvbRegister;
 }

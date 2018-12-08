@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication a(argc, argv);
 
-    QMvbCard *card =new QMvbCard(new QSimulateMvbDriver(),new QMvbConfigure(), new QLittleEndianProtocol());
+    QMvbCard *card =new QMvbCard("card0", new QSimulateMvbDriver(),new QMvbConfigure(), new QLittleEndianProtocol());
 
     card->configure();//configure 能否在addport后面？
     card->addSinkPort(0x01, 4, 128);

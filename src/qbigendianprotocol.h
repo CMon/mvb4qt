@@ -5,7 +5,7 @@
 #include <QDebug>
 #include "qabstractmvbprotocol.h"
 
-class QBigEndianProtocol : QAbstractMvbProtocol
+class QBigEndianProtocol : public QAbstractMvbProtocol
 {
 public:
     QBigEndianProtocol();

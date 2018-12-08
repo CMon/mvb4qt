@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QMap>
 #include <QList>
+#include <QDebug>
 #include "mvb4qt.h"
 #include "qmvbport.h"
 
@@ -43,6 +44,58 @@ public:
     QMvbPort *getPort(const qint16 number) const;
 
     /*
+     * Brief    Add a source mvb port to the register.
+     * Param    "number" is the number of the mvb port.
+     *          "size" is the mvb port size, 2 4 8 16 or 32 could be applied.
+     *          "cycle" is the feature cycle of the mvb port, if no value specified, default value 32ms would be used.
+     *          "group" is the group that the mvb port belong to, it is useful when too many ports added,
+     *                  and also if no value specified, default "" value all woule by used.
+     * Return   Return true if the mvb port was added successfully, or return false.
+     */
+    bool addSourcePort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
+
+    // See also the method of addSourcePort
+    bool addSinkPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
+
+    // See also the method of addSourcePort
+    bool addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group = "");
+
+    /*
+     * Brief    To test if the port of the number exists.
+     * Param    "number" is the type of the mvb port number.
+     * Return   Return true if the mvb port exists, or return false.
+     */
+    bool containPort(const qint16 number) const;
+
+    qint16 getMinDeviceId() const;
+    void setMinDeviceId(const qint16 minDeviceId);
+
+    qint16 getMaxDeviceId() const;
+    void setMaxDeviceId(const qint16 maxDeviceId);
+
+    qint16 getMinPortNumber() const;
+    void setMinPortNumeber(const qint16 minPortNumber);
+
+    qint16 getMaxPortNumber() const;
+    void setMaxPortNumber(const qint16 maxPortNumber);
+
+    Mvb4Qt::MvbCardState getState() const;
+    void setState(const Mvb4Qt::MvbCardState state);
+
+    Mvb4Qt::MvbBufferSize getBufferSize() const;
+    void setBufferSize(const Mvb4Qt::MvbBufferSize bufferSize);
+
+    qint16 getDeviceId() const;
+    void setdeviceId();
+
+    Mvb4Qt::MvbPhyMode getPhyMode() const;
+    void setPhyMode(const Mvb4Qt::MvbPhyMode phyMode);
+
+    const QString &getName() const;
+    void setName(const QString name);
+
+private:
+    /*
      * Brief    Add a mvb port to the register.
      * Param    "number" is the type of the mvb port number,
      *          "size" is the mvb port size, 2 4 8 16 or 32 could be applied.
@@ -55,7 +108,8 @@ public:
     bool addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle = 32, QString group = "all");
 
 private:
-    quint16 deviceId;   // the id of mvb device
+    QString name;
+    qint16 deviceId;   // the id of mvb device
     Mvb4Qt::MvbPhyMode phyMode;    // the mode of mvb device
     Mvb4Qt::MvbBufferSize bufferSize;  // the buffer size of mvb device
     Mvb4Qt::MvbCardState state;    // the state of mvb card

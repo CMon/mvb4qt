@@ -9,7 +9,6 @@ class QMvbPort
 {
 public:
     QMvbPort(const qint16 number, const quint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group);
-    // ~QMvbPort();
     qint16 getNumber() const;
     Mvb4Qt::MvbPortType getType() const;
     qint16 getSize() const;

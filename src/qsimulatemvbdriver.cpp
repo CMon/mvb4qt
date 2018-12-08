@@ -4,33 +4,22 @@ QSimulateMvbDriver::QSimulateMvbDriver()
 {
 }
 
-QSimulateMvbDriver::~QSimulateMvbDriver()
-{
-
-}
-
-const QString QSimulateMvbDriver::version = "1.0.0";
-
-bool QSimulateMvbDriver::start(const QMvbCard *card)
+bool QSimulateMvbDriver::start(const QMvbRegister* mvbRegister)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::stop(const QMvbCard *card)
+bool QSimulateMvbDriver::stop(const QMvbRegister* mvbRegister)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::configure(QMvbConfigure *configure)
+bool QSimulateMvbDriver::configure(const QMvbRegister* mvbRegister)
 {
-    configure->setDeviceId(0x31);
-    configure->setPhyMode(Mvb4Qt::MvbEmdMode);
-    configure->setState(Mvb4Qt::MvbCardConfigure);
-    configure->setBufferSize(Mvb4Qt::MaxMvbBuffer);
     return true;
 }
 
-bool QSimulateMvbDriver::updatePort(QMvbPort *port)
+bool QSimulateMvbDriver::updatePort(const QMvbRegister* mvbRegister, QMvbPort *port)
 {
     if (port == nullptr)
     {
@@ -62,5 +51,5 @@ bool QSimulateMvbDriver::updatePort(QMvbPort *port)
 
 QString QSimulateMvbDriver::getVersion() const
 {
-    return version;
+    return "1.0.0";
 }
