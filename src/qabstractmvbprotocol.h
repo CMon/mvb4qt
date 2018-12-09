@@ -2,11 +2,15 @@
 #define QABSTRACTMVBPROTOCOL_H
 
 
-#include "mvb4qt.h"
-#include <QtGlobal>
 #include <QObject>
+#include <QtGlobal>
+#include "mvb4qtglobal.h"
 
-class QAbstractMvbProtocol : QObject
+/*
+ * This is an abstract class of the mvb protocol, users should implement it according to their
+ * own real protocol in order to obtain bool data integer data etc.
+ */
+class QAbstractMvbProtocol : public QObject
 {
 public:
     QAbstractMvbProtocol();

@@ -1,11 +1,11 @@
 #ifndef QMVBPORT_H
 #define QMVBPORT_H
 
+
 #include <QObject>
-#include "mvb4qt.h"
+#include "mvb4qtglobal.h"
 
-
-class QMvbPort
+class QMvbPort : public QObject
 {
 public:
     QMvbPort(const qint16 number, const quint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group);
@@ -17,7 +17,6 @@ public:
     QString getGroup() const;
     void setRefresh(const quint16 refresh);
     quint8 *getData() const;
-    void setData(quint8* data);
     void clear();
 
 private:

@@ -1,4 +1,7 @@
+#include <QDebug>
+#include <QTime>
 #include "qsimulatemvbdriver.h"
+#include "mvb4qt.h"
 
 QSimulateMvbDriver::QSimulateMvbDriver()
 {

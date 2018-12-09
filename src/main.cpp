@@ -1,9 +1,7 @@
 #include <QCoreApplication>
 #include "mvb4qt.h"
-#include "qmvbcard.h"
-#include "qsimulatemvbdriver.h"
-#include "qlittleendianprotocol.h"
-#include "qthread.h"
+#include "mvb4qtglobal.h"
+
 int main(int argc, char *argv[])
 {
 
@@ -18,9 +16,8 @@ int main(int argc, char *argv[])
     card->getMvbRegister()->addSourcePort(0x05, 32, 1024);
     card->getMvbRegister()->addSourcePort(0x06, 32, 1024);
 
-    // qDebug()<<QThread::currentThreadId();
-
     card->setInterval(2048);
+    card->setDebugMode(true);
     card->start();
 
     return a.exec();

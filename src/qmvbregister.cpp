@@ -1,4 +1,6 @@
+#include <QDebug>
 #include "qmvbregister.h"
+#include "mvb4qt.h"
 
 QMvbRegister::QMvbRegister()
 {
@@ -37,12 +39,12 @@ bool QMvbRegister::addPort(const qint16 number, const qint16 size, const Mvb4Qt:
     {
         QString temp;
 
-        temp.sprintf("0x%d", QString::number(number, 16));
-        qDebug() << "the port number" << temp << "has already been added";
+        temp.sprintf("0x%x", number, 16);
+        qDebug() << "the port number" << temp << "has already been added" << _MVB4QT_LIB_INFO;
 
         return false;
     }
-    else if (type != Mvb4Qt::MvbVirtualPort && number < this->maxPortNumber && number > this->minPortNumber)
+    else if (type != Mvb4Qt::MvbVirtualPort && number <= this->maxPortNumber && number >= this->minPortNumber)
     {
         this->portMap.insert(number, new QMvbPort(number, size, type, cycle, group));
 
@@ -56,6 +58,9 @@ bool QMvbRegister::addPort(const qint16 number, const qint16 size, const Mvb4Qt:
     }
     else
     {
+        qDebug() << "fail adding port number of" << QString::number(number, 16)
+                    << "to card named" << this->name;
+
         return false;
     }
 }
@@ -95,7 +100,7 @@ QMvbPort *QMvbRegister::getPort(const qint16 number) const
     {
         QString temp;
 
-        temp.sprintf("%d0x", QString::number(number, 16));
+        temp.sprintf("0x%x", number);
         qDebug() << "fail getting the port number" << temp << _MVB4QT_LIB_INFO;
 
         return nullptr;
@@ -106,27 +111,24 @@ bool QMvbRegister::removePort(const qint16 number)
 {
     if (this->state == Mvb4Qt::MvbCardStart)
     {
-        qDebug() <<
-    }
-    else
-    {
+        qDebug() << "please stop the mvb card named" << this->name
+                    << "before removing the port" << _MVB4QT_LIB_INFO;
 
-    }
-
-    if (this->MvbConfigure->getState() == Mvb4Qt::MvbCardStart)
-    {
         return false;
     }
-    else if (this->portMap.contains(number))
+    else if (this->portMap.contains(number) == false)
+    {
+        qDebug() << "the mvb port of number" << QString::number(number, 16)
+                    << "doesn't exist in the mvb card named" << this->name << _MVB4QT_LIB_INFO;
+
+        return false;
+    }
+    else
     {
         delete this->portMap[number];
         this->portMap.remove(number);
 
         return true;
-    }
-    else
-    {
-        return false;
     }
 }
 
@@ -143,6 +145,33 @@ bool QMvbRegister::addSinkPort(const qint16 number, const qint16 size, const qui
 bool QMvbRegister::addVirtualPort(const qint16 number, const qint16 size, const quint16 cycle, const QString group)
 {
     return this->addPort(number, size, Mvb4Qt::MvbVirtualPort, cycle, group);
+}
+
+bool QMvbRegister::addAttribute(QString key, QString value)
+{
+    if (this->attributeMap.contains(key))
+    {
+        qDebug() << "fail adding attribute for it has already been in the map"
+                    << _MVB4QT_LIB_INFO;
+
+        return false;
+    }
+    else
+    {
+        this->attributeMap.insert(key, value);
+
+        return true;
+    }
+}
+
+const QString &QMvbRegister::getAttribute(QString key) const
+{
+    return this->attributeMap.value(key, "");
+}
+
+const QMap<QString, QString> &QMvbRegister::getAllAttribute() const
+{
+    return this->attributeMap;
 }
 
 Mvb4Qt::MvbCardState QMvbRegister::getState() const

@@ -2,19 +2,18 @@
 #define QMVBCARDMANAGER_H
 
 
+#include <QObject>
 #include <QMap>
-#include <QDebug>
-#include "mvb4qt.h"
-#include "qmvbcard.h"
-#include "qabstractmvbdriver.h"
-#include "qabstractmvbprotocol.h"
-#include "qbigendianprotocol.h"
+
+class QMvbCard;
+class QAbstractMvbProtocol;
+class QAbstractMvbDriver;
 
 /*
  * The class is multifunction vehicle bus card manager which is singleton mode,
  * it is used to manage mvb card, like crate cards, remove cards or get cards.
  */
-class QMvbCardManager
+class QMvbCardManager : public QObject
 {
 public:
     ~QMvbCardManager();

@@ -1,9 +1,11 @@
+#include <QDebug>
 #include "qmvbcard.h"
-#include "qlittleendianprotocol.h"
-#include "qmvbport.h"
+#include "mvb4qt.h"
 
 QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
 {
+    this->debugMode = false;
+
     // the register of this mvb card.
     this->mvbRegister = new QMvbRegister();
     this->mvbRegister->setName(name);
@@ -11,9 +13,9 @@ QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtoco
     this->driver = driver;
     this->protocol = protocol;
 
-    this->timer = new QTimer(this);
+    this->timer = new QTimer(); // the timer belong to main thread at this time.
     this->timer->setInterval(100);  // the default value is 100ms
-    this->connect(timer, SIGNAL(timeout()), this, SLOT(updateMvbSlot()), Qt::AutoConnection);
+    this->connect(timer, SIGNAL(timeout()), this, SLOT(updateCard()), Qt::AutoConnection);
 
     this->moveToThread(&(this->thread));
 }
@@ -264,7 +266,9 @@ void QMvbCard::start()
         this->timer->start();
 
         qDebug() << "the mvb card named" << this->mvbRegister->getName()
-                    << "started..." << _MVB4QT_LIB_INFO; ;
+                    << "started..." << _MVB4QT_LIB_INFO;
+        qDebug() << "the current thread id is" << QThread::currentThreadId()
+                    << _MVB4QT_LIB_INFO;
     }
     else
     {
@@ -341,24 +345,37 @@ void QMvbCard::updateCard()
         }
     }
 
-    // debug mode, may add a flag to active this function later
-    foreach(QMvbPort *port, this->mvbRegister->getPortList())
+    if (this->debugMode)
     {
-        QString info;
-
-        info.append(QString::number(port->getNumber(), 16));
-        info.append(":");
-
-        for (int i = 0; i < port->getSize(); i ++)
+        // debug mode, print all port data when update slot is actived.
+        foreach(QMvbPort *port, this->mvbRegister->getPortList())
         {
-            info.append(QString::number(this->getQuint8(port->getNumber(), i), 16));
-        }
+            QString info;
 
-        qDebug() << info << QThread::currentThreadId();
+            info.append(QString::number(port->getNumber(), 16));
+            info.append(":");
+
+            for (int i = 0; i < port->getSize(); i ++)
+            {
+                info.append(QString::number(this->getQuint8(port->getNumber(), i), 16));
+            }
+
+            qDebug() << info << QThread::currentThreadId();
+        }
     }
 }
 
 QMvbRegister *QMvbCard::getMvbRegister()
 {
     return this->mvbRegister;
+}
+
+Mvb4Qt::EndianMode QMvbCard::getEndianMode() const
+{
+    return this->protocol->getEndianMode();
+}
+
+void QMvbCard::setDebugMode(const bool debugMode)
+{
+    this->debugMode = debugMode;
 }

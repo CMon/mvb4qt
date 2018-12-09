@@ -1,4 +1,6 @@
+#include <QDebug>
 #include "qbigendianprotocol.h"
+#include "mvb4qt.h"
 
 QBigEndianProtocol::QBigEndianProtocol()
 {
@@ -144,7 +146,7 @@ T QBigEndianProtocol::getValue(const quint8 *data, const quint8 byte) const
 }
 
 template <typename T>
-void QBigEndianProtocol::setValue(const quint8 *data, const quint8 byte, const T value) const
+void QBigEndianProtocol::setValue(quint8 *data, const quint8 byte, const T value)
 {
     if (data == nullptr)
     {

@@ -1,19 +1,18 @@
 #ifndef QMVBREGISTER_H
 #define QMVBREGISTER_H
 
-
 #include <QObject>
 #include <QMap>
 #include <QList>
-#include <QDebug>
-#include "mvb4qt.h"
-#include "qmvbport.h"
+#include "mvb4qtglobal.h"
+
+class QMvbPort;
 
 /*
  * The class is the register of the mvb card that is used store almost all information like
  * device id, mvb ports and physical mode etc.
  */
-class QMvbRegister : QObject
+class QMvbRegister : public QObject
 {
     friend class QMvbCard;
 
@@ -121,6 +120,10 @@ private:
      */
     bool addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle = 32, QString group = "all");
 
+    bool addAttribute(QString key, QString value);
+    const QString &getAttribute(QString key) const;
+    const QMap<QString, QString> &getAllAttribute() const;
+
 private:
     QString name;
     qint16 deviceId;   // the id of mvb device
@@ -130,6 +133,7 @@ private:
     qint16 minDeviceId, maxDeviceId;    // the device limitation
     qint16 minPortNumber, maxPortNumber;    // the port number limitation
     QMap<qint16, QMvbPort *> portMap; // a map used to store all ports
+    QMap<QString, QString> attributeMap;    // to store some attribute
 };
 
 #endif // QMVBREGISTER_H

@@ -2,9 +2,6 @@
 #define QSIMULATEMVBDRIVER_H
 
 
-#include <QTime>
-#include "mvb4qt.h"
-#include "qmvbcard.h"
 #include "qabstractmvbdriver.h"
 
 class QSimulateMvbDriver : public QAbstractMvbDriver

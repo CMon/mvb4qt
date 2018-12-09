@@ -1,4 +1,6 @@
+#include <QDebug>
 #include "qmvbcardmanager.h"
+#include "mvb4qt.h"
 
 QMvbCardManager::QMvbCardManager()
 {
@@ -41,13 +43,13 @@ QMvbCard *QMvbCardManager::addMvbCard(const QString name, QAbstractMvbDriver *dr
     else if (protocol == nullptr)
     {
         // If there is no protocol specified, big endian protocol would be applied.
-        this->cardMap.insert(name, new QMvbCard(driver, new QBigEndianProtocol()));
+        this->cardMap.insert(name, new QMvbCard(name, driver, new QBigEndianProtocol()));
 
         return this->cardMap[name];
     }
     else
     {
-        this->cardMap.insert(name, new QMvbCard(driver, protocol));
+        this->cardMap.insert(name, new QMvbCard(name, driver, protocol));
 
         return this->cardMap[name];
     }

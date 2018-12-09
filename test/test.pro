@@ -25,11 +25,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        widget.cpp \
+    qmvbportview.cpp \
+    qmvbregisterview.cpp \
+    qmvbcardview.cpp \
+    qmvbcardmanagerview.cpp
 
 HEADERS += \
         widget.h \
-    mvb4qt.h
+    mvb4qt.h \
+    qmvbportview.h \
+    qmvbregisterview.h \
+    qmvbcardview.h \
+    qmvbcardmanagerview.h
 
 FORMS += \
         widget.ui

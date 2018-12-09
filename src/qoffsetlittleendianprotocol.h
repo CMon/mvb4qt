@@ -4,7 +4,7 @@
 
 #include "qlittleendianprotocol.h"
 
-class QOffsetLittleEndianProtocol : QLittleEndianProtocol
+class QOffsetLittleEndianProtocol : public QLittleEndianProtocol
 {
 public:
     QOffsetLittleEndianProtocol();

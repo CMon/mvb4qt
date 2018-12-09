@@ -1,10 +1,8 @@
 #ifndef QLITTLEENDIANPROTOCOL_H
 #define QLITTLEENDIANPROTOCOL_H
 
-#include "mvb4qt.h"
-#include "qobject.h"
+
 #include "qabstractmvbprotocol.h"
-#include <QDebug>
 
 class QLittleEndianProtocol: public QAbstractMvbProtocol
 {
