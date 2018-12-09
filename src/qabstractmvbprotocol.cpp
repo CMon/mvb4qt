@@ -1,4 +1,6 @@
+#include <QDebug>
 #include "qabstractmvbprotocol.h"
+#include "mvb4qt.h"
 
 QAbstractMvbProtocol::QAbstractMvbProtocol()
 {

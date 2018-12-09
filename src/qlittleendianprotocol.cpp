@@ -1,4 +1,6 @@
+#include <QDebug>
 #include "qlittleendianprotocol.h"
+#include "mvb4qt.h"
 
 QLittleEndianProtocol::QLittleEndianProtocol()
 {

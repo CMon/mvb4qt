@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "qoffsetbigendianprotocol.h"
 
 QOffsetBigEndianProtocol::QOffsetBigEndianProtocol()

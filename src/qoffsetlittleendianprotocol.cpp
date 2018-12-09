@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "qoffsetlittleendianprotocol.h"
 
 QOffsetLittleEndianProtocol::QOffsetLittleEndianProtocol()

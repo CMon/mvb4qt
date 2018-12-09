@@ -27,7 +27,8 @@ SOURCES += \
     qabstractmvbprotocol.cpp \
     qoffsetbigendianprotocol.cpp \
     qoffsetlittleendianprotocol.cpp \
-    qmvbconfigure.cpp
+    qmvbregister.cpp \
+    qmvbcardmanager.cpp
 
 HEADERS += \
     mvb4qt.h \
@@ -43,4 +44,6 @@ HEADERS += \
     qbigendianprotocol.h \
     qoffsetbigendianprotocol.h \
     qoffsetlittleendianprotocol.h \
-    qmvbconfigure.h
+    qmvbregister.h \
+    qmvbcardmanager.h \
+    mvb4qtglobal.h
