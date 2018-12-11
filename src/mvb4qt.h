@@ -1,10 +1,9 @@
 #ifndef MVB4QT_H
 #define MVB4QT_H
 
-
 /*
  * This file contains all the header files used by this library.
- * Users do not need to consider the implementation details too much and can directly refer to them.
+ * Users don't need to consider the implementation details too much and can directly refer to them.
  * Of course, if users is very familiar with the library class, can also include specific files directly.
  */
 

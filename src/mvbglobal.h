@@ -1,6 +1,5 @@
-#ifndef MVB4QTTYPES_H
-#define MVB4QTTYPES_H
-
+#ifndef MVBGLOBAL_H
+#define MVBGLOBAL_H
 
 /*
  * This file defines a namespace and some necessary macros as a global reference

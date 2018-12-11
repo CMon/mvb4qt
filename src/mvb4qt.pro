@@ -46,4 +46,4 @@ HEADERS += \
     qoffsetlittleendianprotocol.h \
     qmvbregister.h \
     qmvbcardmanager.h \
-    mvb4qtglobal.h
+    mvbglobal.h
