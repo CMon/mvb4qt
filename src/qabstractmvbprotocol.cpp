@@ -1,21 +1,24 @@
+#include <QDebug>
 #include "qabstractmvbprotocol.h"
+#include "mvb4qt.h"
 
 QAbstractMvbProtocol::QAbstractMvbProtocol()
 {
-    quint8 test[2];
+    quint8 a[2] = {0};
 
-    *(quint16 *)test = 0x01;
+    *(quint16 *)a = 0x01;
 
-    if (test[0] == 1)
+    if (a[0] == 1)
     {
         this->endianMode = Mvb4Qt::LittenEndian;
     }
-    else if (test[1] == 1)
+    else if (a[1] == 1)
     {
         this->endianMode = Mvb4Qt::BigEndian;
     }
     else
     {
+        // the default value
         this->endianMode = Mvb4Qt::LittenEndian;
     }
 }

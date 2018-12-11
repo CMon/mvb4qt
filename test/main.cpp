@@ -1,17 +1,12 @@
-#include "widget.h"
 #include <QApplication>
-#include <QDebug>
-#include "mvb4qt.h"
+#include "qmvbcardmanagerview.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Widget w;
+    QMvbCardManagerView managerView;
 
-    Mvb4Qt::MvbPortType type = Mvb4Qt::MvbSourcePort;
-    qDebug() << type;
-
-    w.show();
+    managerView.show();
 
     return a.exec();
 }

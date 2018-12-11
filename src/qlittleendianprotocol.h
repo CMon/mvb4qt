@@ -1,10 +1,13 @@
 #ifndef QLITTLEENDIANPROTOCOL_H
 #define QLITTLEENDIANPROTOCOL_H
 
-#include "mvb4qt.h"
-#include "qobject.h"
 #include "qabstractmvbprotocol.h"
 
+/*
+ * An implementation of the abstract class QAbstractMvbProtocol, it is a little endian protocol,
+ * all signal would be parsed by little endian. This class could adapt to different types of the hardware platform,
+ * such as intel and arm, it means that users doesn't need to consider the endian of the hardware.
+ */
 class QLittleEndianProtocol: public QAbstractMvbProtocol
 {
 public:
@@ -23,6 +26,12 @@ public:
     void setQuint16(quint8 *data, const quint8 byte, const quint16 value);
     quint32 getQuint32(const quint8 *data, const quint8 byte) const;
     void setQuint32(quint8 *data, const quint8 byte, const quint32 value);
+
+private:
+    template <typename T>
+    T getValue(const quint8 *data, const quint8 byte) const;
+    template <typename T>
+    void setValue(const quint8 *data, const quint8 byte, const T value) const;
 };
 
 #endif // QBIGENDIANPROTOCOL_H

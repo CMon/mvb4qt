@@ -1,6 +1,8 @@
+#include <QDebug>
 #include "qmvbport.h"
 
-QMvbPort::QMvbPort(const qint16 number, const quint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
+QMvbPort::QMvbPort(const qint16 number, const quint16 size,
+                    const Mvb4Qt::MvbPortType type, const quint16 cycle, QString group)
 {
     this->number = number;
     this->size = size;
@@ -51,16 +53,6 @@ quint8* QMvbPort::getData() const
     return const_cast<quint8*>(this->data);
 }
 
-void QMvbPort::setData(quint8 *data)
-{
-    delete this->data;
-    for (qint16 i = 0; i < sizeof(this->data); i ++)
-    {
-        this->data[i] = *data;
-        data++;
-    }
-}
-
 void QMvbPort::clear()
 {
     for (qint16 i = 0; i < sizeof(this->data); i ++)
@@ -72,4 +64,16 @@ void QMvbPort::clear()
 QString QMvbPort::getGroup() const
 {
     return group;
+}
+
+bool QMvbPort::isTimeout() const
+{
+    if (this->refresh > this->cycle)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
