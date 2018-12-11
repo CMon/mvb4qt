@@ -1,13 +1,13 @@
 # Mvb4Qt
 `MVB` `Qt` `Communication`
 ![logo](https://github.com/vehicle-net/mvb4qt/blob/master/logo.png)
-## 项目简介
-**Mvb4Qt**是一款基于Qt的轻量级的MVB通讯库，能够帮助用户在Qt框架下快速地实现MVB通讯开发。该库经过了多个实际项目的验证，运行效率高且性能稳定，即可用于试验室测试开发，也可用于实际的工业现场。MVB全称Multiple Vehicle Bus，即多功能车辆总线，在轨道车辆领域有着广泛地应用。
-## 功能
-* 非阻塞的MVB通讯
-* 多线程通讯管理
-* 多板卡集成管理
-* 通讯协议配置
-* 支持MVB板卡驱动自开发集成
-* 支持通讯协议自开发集成
-* 支持模拟通讯测试
+## Introduction
+**Mvb4Qt**is a lightweight MVB communication library based on Qt, which can help users to quickly realize MVB communication development under Qt framework. The library is highly efficient and stable, and can be used for laboratory test development as well as for practical industrial sites. MVB stands for multi-functional vehicle bus, which is widely used in the field of rail vehicles.
+## Features
+* Non-blocking MVB communication
+* Multi-thread communication management
+* Multi-card integrated management
+* Communication protocol configuration
+* Support for custom card drivers
+* Support custom card communication protocol
+* Support virtual communication test
