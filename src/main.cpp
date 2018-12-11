@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 #include "mvb4qt.h"
-#include "mvb4qtglobal.h"
+#include "mvbglobal.h"
 
 int main(int argc, char *argv[])
 {

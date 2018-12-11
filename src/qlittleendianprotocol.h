@@ -1,9 +1,13 @@
 #ifndef QLITTLEENDIANPROTOCOL_H
 #define QLITTLEENDIANPROTOCOL_H
 
-
 #include "qabstractmvbprotocol.h"
 
+/*
+ * An implementation of the abstract class QAbstractMvbProtocol, it is a little endian protocol,
+ * all signal would be parsed by little endian. This class could adapt to different types of the hardware platform,
+ * such as intel and arm, it means that users doesn't need to consider the endian of the hardware.
+ */
 class QLittleEndianProtocol: public QAbstractMvbProtocol
 {
 public:

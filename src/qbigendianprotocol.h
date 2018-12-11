@@ -1,9 +1,13 @@
 #ifndef QBIGENDIANPROTOCOL_H
 #define QBIGENDIANPROTOCOL_H
 
-
 #include "qabstractmvbprotocol.h"
 
+/*
+ * An implementation of the abstract class QAbstractMvbProtocol, it is a big endian protocol
+ * that is common in mvb, all signal would by parsed by big endian. This class could adapt to different types of the hardware platform,
+ * such as intel and arm, it means that users doesn't need to consider the endian of the hareware.
+ */
 class QBigEndianProtocol : public QAbstractMvbProtocol
 {
 public:

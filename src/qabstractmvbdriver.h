@@ -1,7 +1,6 @@
 #ifndef QABSTRACTMVBDRIVER_H
 #define QABSTRACTMVBDRIVER_H
 
-
 #include <QObject>
 
 class QMvbRegister;

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QList>
-#include "mvb4qtglobal.h"
+#include "mvbglobal.h"
 
 class QMvbPort;
 
