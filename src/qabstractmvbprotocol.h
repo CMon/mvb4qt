@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtGlobal>
-#include "mvbglobal.h"
+#include "mvb4qt.h"
 
 /*
  * This is an abstract class of the mvb protocol, users should implement it according to their

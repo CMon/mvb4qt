@@ -1,6 +1,6 @@
 #include <QDebug>
 #include "qmvbregister.h"
-#include "mvb4qt.h"
+#include "qmvbport.h"
 
 QMvbRegister::QMvbRegister()
 {

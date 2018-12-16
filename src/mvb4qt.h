@@ -2,21 +2,46 @@
 #define MVB4QT_H
 
 /*
- * This file contains all the header files used by this library.
- * Users don't need to consider the implementation details too much and can directly refer to them.
- * Of course, if users is very familiar with the library class, can also include specific files directly.
+ * This file defines a namespace and some necessary macros as a global reference
+ * to this library class. Users must reference it before library programming.
  */
 
-#include "qmvbcardmanager.h"
-#include "qmvbcard.h"
-#include "qmvbregister.h"
-#include "qmvbport.h"
-#include "qabstractmvbdriver.h"
-#include "qabstractmvbprotocol.h"
-#include "qoffsetbigendianprotocol.h"
-#include "qoffsetlittleendianprotocol.h"
-#include "qsimulatemvbdriver.h"
-#include "qlittleendianprotocol.h"
-#include "qbigendianprotocol.h"
+namespace Mvb4Qt
+{
+    enum MvbPortType
+    {
+        MvbSinkPort,
+        MvbSourcePort,
+        MvbVirtualPort
+    };
+
+    enum MvbPhyMode
+    {
+        MvbOfgMode,
+        MvbEmdMode,
+        MvbEmsMode
+    };
+
+    enum MvbBufferSize
+    {
+        MinMvbBuffer,
+        MidMvbBuffer,
+        MaxMvbBuffer
+    };
+
+    enum MvbCardState
+    {
+        MvbCardStart,
+        MvbCardStop
+    };
+
+    enum EndianMode
+    {
+        BigEndian,
+        LittenEndian
+    };
+}
+
+#define _MVB4QT_LIB_INFO __FILE__ << __LINE__
 
 #endif // MVB4QT_H

@@ -9,7 +9,7 @@
 #include <QReadLocker>
 #include <QWriteLocker>
 #include <QThread>
-#include "mvbglobal.h"
+#include "mvb4qt.h"
 
 class QMvbRegister;
 class QAbstractMvbDriver;

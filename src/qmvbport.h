@@ -2,7 +2,7 @@
 #define QMVBPORT_H
 
 #include <QObject>
-#include "mvbglobal.h"
+#include "mvb4qt.h"
 
 /*
  * This class is a the mvb port which contains all the information about the port,
