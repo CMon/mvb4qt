@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-11-20T16:13:15
+# Project created by QtCreator 2018-12-17T10:10:18
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = test
+TARGET = mvbgui
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,19 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        widget.cpp \
-    qmvbportview.cpp \
-    qmvbregisterview.cpp \
-    qmvbcardview.cpp \
-    qmvbcardmanagerview.cpp
+    qmvbcardmanagerviewer.cpp \
+    qmvbcardviewer.cpp \
+    qmvbsinkportviewer.cpp \
+    qmvbregisterviewer.cpp \
+    createcarddialog.cpp
 
 HEADERS += \
-        widget.h \
-    mvb4qt.h \
-    qmvbportview.h \
-    qmvbregisterview.h \
-    qmvbcardview.h \
-    qmvbcardmanagerview.h
+    qmvbcardmanagerviewer.h \
+    qmvbcardviewer.h \
+    qmvbsinkportviewer.h \
+    qmvbregisterviewer.h \
+    createcarddialog.h
 
-FORMS += \
-        widget.ui
+FORMS +=
+
+RESOURCES += \
+    images.qrc
+
+RC_FILE = appicon.rc

@@ -133,7 +133,7 @@ private:
     qint16 minDeviceId, maxDeviceId;    // the device limitation
     qint16 minPortNumber, maxPortNumber;    // the port number limitation
     QMap<qint16, QMvbPort *> portMap; // a map used to store all ports
-    QMap<QString, QString> attributeMap;    // to store some attribute
+    QMap<QString, QString> attributeMap;    // store some attribute
 };
 
 #endif // QMVBREGISTER_H
