@@ -1,6 +1,8 @@
 #include <QDebug>
 #include "qmvbcard.h"
-#include "mvb4qt.h"
+#include "qabstractmvbdriver.h"
+#include "qabstractmvbprotocol.h"
+#include "qmvbport.h"
 
 QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
 {

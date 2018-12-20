@@ -1,6 +1,8 @@
 #include <QDebug>
 #include "qmvbcardmanager.h"
-#include "mvb4qt.h"
+#include "qabstractmvbprotocol.h"
+#include "qabstractmvbdriver.h"
+#include "qbigendianprotocol.h"
 
 QMvbCardManager::QMvbCardManager()
 {

@@ -1,7 +1,11 @@
 QT -= gui
 
-CONFIG += c++11 console
-CONFIG -= app_bundle
+# CONFIG += c++11 console
+# CONFIG -= app_bundle
+
+TEMPLATE = lib
+CONFIG += staticLib
+TARGET = Mvb4Qt
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -15,30 +19,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp \
     qmvbport.cpp \
     qmvbcard.cpp \
-    # qmvbmanager.cpp \
-    # qavicmvbdriver.cpp \
-    # qpixymvbdriver.cpp \
-    qsimulatemvbdriver.cpp \
     qlittleendianprotocol.cpp \
     qbigendianprotocol.cpp \
     qabstractmvbprotocol.cpp \
     qoffsetbigendianprotocol.cpp \
     qoffsetlittleendianprotocol.cpp \
     qmvbregister.cpp \
-    qmvbcardmanager.cpp
+    qmvbcardmanager.cpp \
+    qrandommvbdriver.cpp
 
 HEADERS += \
     mvb4qt.h \
     qmvbport.h \
     qabstractmvbdriver.h \
     qmvbcard.h \
-    # qmvbmanager.h \
-    # qavicmvbdriver.h \
-    # qpixymvbdriver.h \
-    qsimulatemvbdriver.h \
     qabstractmvbprotocol.h \
     qlittleendianprotocol.h \
     qbigendianprotocol.h \
@@ -46,4 +42,4 @@ HEADERS += \
     qoffsetlittleendianprotocol.h \
     qmvbregister.h \
     qmvbcardmanager.h \
-    mvbglobal.h
+    qrandommvbdriver.h
