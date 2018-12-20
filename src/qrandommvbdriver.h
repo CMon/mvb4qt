@@ -1,5 +1,5 @@
-#ifndef QSIMULATEMVBDRIVER_H
-#define QSIMULATEMVBDRIVER_H
+#ifndef QRANDOMMVBDRIVER_H
+#define QRANDOMMVBDRIVER_H
 
 #include "qabstractmvbdriver.h"
 
@@ -9,10 +9,10 @@
  * numbers for each mvb port without mvb card. It is extremely useful under
  * test conditions.
  */
-class QSimulateMvbDriver : public QAbstractMvbDriver
+class QRandomMvbDriver : public QAbstractMvbDriver
 {
 public:
-    QSimulateMvbDriver();
+    QRandomMvbDriver();
     virtual bool start(const QMvbRegister* mvbRegister);
     virtual bool stop(const QMvbRegister* mvbRegister);
     virtual bool configure(const QMvbRegister* mvbRegister);
@@ -23,4 +23,4 @@ public:
     virtual QString getVersion() const;
 };
 
-#endif // QSIMULATEMVBDRIVER_H
+#endif // QRANDOMMVBDRIVER_H

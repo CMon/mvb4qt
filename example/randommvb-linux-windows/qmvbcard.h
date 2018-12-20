@@ -10,8 +10,8 @@
 #include <QWriteLocker>
 #include <QThread>
 #include "mvb4qt.h"
-#include "qmvbregister.h"
 
+class QMvbRegister;
 class QAbstractMvbDriver;
 class QAbstractMvbProtocol;
 

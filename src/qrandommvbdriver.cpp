@@ -1,28 +1,28 @@
 #include <QDebug>
 #include <QTime>
-#include "qsimulatemvbdriver.h"
-#include "qmvbport.h".h"
+#include "qrandommvbdriver.h"
+#include "qmvbport.h"
 
-QSimulateMvbDriver::QSimulateMvbDriver()
+QRandomMvbDriver::QRandomMvbDriver()
 {
 }
 
-bool QSimulateMvbDriver::start(const QMvbRegister* mvbRegister)
-{
-    return true;
-}
-
-bool QSimulateMvbDriver::stop(const QMvbRegister* mvbRegister)
+bool QRandomMvbDriver::start(const QMvbRegister* mvbRegister)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::configure(const QMvbRegister* mvbRegister)
+bool QRandomMvbDriver::stop(const QMvbRegister* mvbRegister)
 {
     return true;
 }
 
-bool QSimulateMvbDriver::updatePort(const QMvbRegister* mvbRegister, QMvbPort *port)
+bool QRandomMvbDriver::configure(const QMvbRegister* mvbRegister)
+{
+    return true;
+}
+
+bool QRandomMvbDriver::updatePort(const QMvbRegister* mvbRegister, QMvbPort *port)
 {
     if (port == nullptr)
     {
@@ -52,7 +52,7 @@ bool QSimulateMvbDriver::updatePort(const QMvbRegister* mvbRegister, QMvbPort *p
     }
 }
 
-QString QSimulateMvbDriver::getVersion() const
+QString QRandomMvbDriver::getVersion() const
 {
     return "1.0.0";
 }

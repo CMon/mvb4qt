@@ -21,25 +21,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     qmvbport.cpp \
     qmvbcard.cpp \
-    qsimulatemvbdriver.cpp \
     qlittleendianprotocol.cpp \
     qbigendianprotocol.cpp \
     qabstractmvbprotocol.cpp \
     qoffsetbigendianprotocol.cpp \
     qoffsetlittleendianprotocol.cpp \
     qmvbregister.cpp \
-    qmvbcardmanager.cpp
+    qmvbcardmanager.cpp \
+    qrandommvbdriver.cpp
 
 HEADERS += \
     mvb4qt.h \
     qmvbport.h \
     qabstractmvbdriver.h \
     qmvbcard.h \
-    qsimulatemvbdriver.h \
     qabstractmvbprotocol.h \
     qlittleendianprotocol.h \
     qbigendianprotocol.h \
     qoffsetbigendianprotocol.h \
     qoffsetlittleendianprotocol.h \
     qmvbregister.h \
-    qmvbcardmanager.h
+    qmvbcardmanager.h \
+    qrandommvbdriver.h

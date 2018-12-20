@@ -1,6 +1,5 @@
 #include <QDebug>
 #include "qmvbcard.h"
-#include "qmvbregister.h"
 #include "qabstractmvbdriver.h"
 #include "qabstractmvbprotocol.h"
 #include "qmvbport.h"

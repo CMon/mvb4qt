@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QMap>
-#include "qmvbcard.h"
 
+class QMvbCard;
 class QAbstractMvbProtocol;
 class QAbstractMvbDriver;
 
