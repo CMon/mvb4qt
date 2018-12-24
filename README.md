@@ -12,40 +12,47 @@
 * Support custom card communication protocol
 * Support virtual communication test
 ## How to build?
-
-    $ qmake
-    $ make
-    $ make install
-
+```console
+$ qmake
+$ make
+$ make install
+```
 ## How to use?
 
-    // get the mvb manager
-    QMvbCardManager *manager = QMvbCardManager::getManager();
-    // add a new mvb card
-    QMvbCard *card = manager->addMvbCard("random", new QRandomMvbDriver(), new QLittleEndianProtocol());
+```c++
+// get the mvb manager
+QMvbCardManager *manager = QMvbCardManager::getManager();
+// add a new mvb card
+QMvbCard *card = manager->addMvbCard("random", new QRandomMvbDriver(), new QLittleEndianProtocol());
 
-    // add sink ports
-    card->getMvbRegister()->addSinkPort(0x01, 8, 128, "acu");
-    card->getMvbRegister()->addSinkPort(0x02, 16, 256, "tcu");
-    card->getMvbRegister()->addSinkPort(0x03, 32, 512, "bcu");
+// add sink ports
+card->getMvbRegister()->addSinkPort(0x01, 8, 128, "acu");
+card->getMvbRegister()->addSinkPort(0x02, 16, 256, "tcu");
+card->getMvbRegister()->addSinkPort(0x03, 32, 512, "bcu");
 
-    // add source ports
-    card->getMvbRegister()->addSourcePort(0x11, 32, 128, "hmi");
-    card->getMvbRegister()->addSourcePort(0x012, 32, 256, "hmi");
-    card->getMvbRegister()->addSourcePort(0x013, 32, 512, "hmi");
-  
-    // set the initial value of source port before start the mvb card
-    card->setQuint8(0x11, 0, 0xFF);
-    card->setQuint8(0x12, 14, 0xFE);
-    card->setQuint8(0x13, 31, 0xEE);
+// add source ports
+card->getMvbRegister()->addSourcePort(0x11, 32, 128, "hmi");
+card->getMvbRegister()->addSourcePort(0x012, 32, 256, "hmi");
+card->getMvbRegister()->addSourcePort(0x013, 32, 512, "hmi");
 
-    card->setDebugMode(true); // set the debug mode
-    card->setInterval(2048);  // set the refresh interval
-    card->start();  // start the mvb card
+// set the initial value of source port before start the mvb card
+card->setQuint8(0x11, 0, 0xFF);
+card->setQuint8(0x12, 14, 0xFE);
+card->setQuint8(0x13, 31, 0xEE);
+
+card->setDebugMode(true); // set the debug mode
+card->setInterval(2048);  // set the refresh interval
+card->start();  // start the mvb card
+```
 
 ## How to get the signal?
 
-    double vehicleSpeed = card->getQuint16(0x01, 0) * 0.1;
-    bool doorOpen = card->getBool(0x02, 2, 1);
-    bool doorClose = card->getBool(0x03, 4, 7);
-    quint32 mileage = card->getQuint32(0x03, 28);
+```c++
+double vehicleSpeed = card->getQuint16(0x01, 0) * 0.1;
+bool doorOpen = card->getBool(0x02, 2, 1);
+bool doorClose = card->getBool(0x03, 4, 7);
+quint32 mileage = card->getQuint32(0x03, 28);
+```
+
+## Feedback
+
