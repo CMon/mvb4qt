@@ -18,7 +18,7 @@ $ make
 $ make install
 ```
 ## How to use?
-
+![flow](./docs/flow.png)
 ```c++
 // get the mvb manager
 QMvbCardManager *manager = QMvbCardManager::getManager();
