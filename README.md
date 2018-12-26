@@ -1,4 +1,4 @@
-# Mvb4Qt - A Lightweight Multi-functional Vehicle Bus Library
+# Mvb4Qt
 `MVB` `Qt` `Communication`
 ![logo](https://github.com/vehicle-net/mvb4qt/blob/master/logo.png)
 ## Introduction
