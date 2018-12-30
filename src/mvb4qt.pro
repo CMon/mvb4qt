@@ -1,8 +1,5 @@
 QT -= gui
 
-# CONFIG += c++11 console
-# CONFIG -= app_bundle
-
 TEMPLATE = lib
 CONFIG += staticLib
 TARGET = Mvb4Qt
@@ -28,7 +25,8 @@ SOURCES += \
     qoffsetlittleendianprotocol.cpp \
     qmvbregister.cpp \
     qmvbcardmanager.cpp \
-    qrandommvbdriver.cpp
+    qrandommvbdriver.cpp \
+    qnormalmvbdriver.cpp
 
 HEADERS += \
     mvb4qt.h \
@@ -42,4 +40,5 @@ HEADERS += \
     qoffsetlittleendianprotocol.h \
     qmvbregister.h \
     qmvbcardmanager.h \
-    qrandommvbdriver.h
+    qrandommvbdriver.h \
+    qnormalmvbdriver.h
