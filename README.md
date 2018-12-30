@@ -1,4 +1,5 @@
-# Mvb4Qt - A lightweight library for multi-functional vehicle bus
+# Mvb4Qt
+A lightweight **library** for **multi-functional vehicle bus**.
 ![logo](./logo.png)
 ## Introduction
 **Mvb4Qt** is a lightweight library for multi-functional vehicle bus, which can help users to quickly realize MVB communication development under the Qt framework. This library is highly efficient and stable, and can be used for laboratory test as well as for production environment.
@@ -18,7 +19,7 @@ $ qmake
 $ make
 ```
 ## How to use?
-###Add `LIBS += -lMvb4Qt` to the .pro file, then use the library as follows:
+Add `LIBS += -lMvb4Qt` to the .pro file, then use the library as follows:
 
 ![flow](./docs/flow.png)
 1. Add a MVB card using the method `addCard()` of the `QMvbCardManager` class. Because `QMvbCardManager` is a singleton, users don't need to instantiate it. Instead, using the static method `getManager()` of `QMvbCardManager` to get a pointer of it, and also users don't need to consider its memory release.
@@ -69,4 +70,5 @@ quint32 mileage = card->getQuint32(0x03, 28);
 Here is only description of the basic use of the library, if you involves more in-depth use and specific implementation methods, please check the help documentation.
 ## Getting Help
 If you have questions, you can reach out to our mailing: deng_ran@foxmail.com
+
 Or you can submit questions directly through the `issues` of this project.
