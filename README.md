@@ -1,5 +1,4 @@
-# Mvb4Qt
-A lightweight **library** for **multi-functional vehicle bus**.
+## Mvb4Qt - A lightweight **library** for **multi-functional vehicle bus**.
 ![logo](./logo.png)
 ## Introduction
 **Mvb4Qt** is a lightweight library for multi-functional vehicle bus, which can help users to quickly realize MVB communication development under the Qt framework. This library is highly efficient and stable, and can be used for laboratory test as well as for production environment.
@@ -69,6 +68,4 @@ quint32 mileage = card->getQuint32(0x03, 28);
 ```
 Here is only description of the basic use of the library, if you involves more in-depth use and specific implementation methods, please check the help documentation.
 ## Getting Help
-If you have questions, you can reach out to our mailing: deng_ran@foxmail.com
-
-Or you can submit questions directly through the `issues` of this project.
+If you have questions, you can reach out to our mailing: `deng_ran@foxmail.com`, or you can submit questions directly through the `issues` of this project.
