@@ -10,8 +10,8 @@
 #include <QWriteLocker>
 #include <QThread>
 #include "mvb4qt.h"
-#include "qmvbregister.h"
 
+class QMvbRegister;
 class QAbstractMvbDriver;
 class QAbstractMvbProtocol;
 
@@ -137,9 +137,7 @@ public slots:
     void setInterval(const qint32 interval);
 
 private:
-    explicit QMvbCard(QString name,
-                        QAbstractMvbDriver *driver = nullptr,
-                            QAbstractMvbProtocol *protocol = nullptr);
+    explicit QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol = nullptr);
 
 private:
     QMvbRegister *mvbRegister;

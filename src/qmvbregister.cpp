@@ -1,6 +1,6 @@
 #include <QDebug>
 #include "qmvbregister.h"
-#include "mvb4qt.h"
+#include "qmvbport.h"
 
 QMvbRegister::QMvbRegister()
 {
@@ -204,7 +204,7 @@ qint16 QMvbRegister::getDeviceId() const
     return this->deviceId;
 }
 
-void QMvbRegister::setdeviceId()
+void QMvbRegister::setDeviceId(const qint16 deviceId)
 {
     this->deviceId = deviceId;
 }
@@ -224,7 +224,7 @@ const QString &QMvbRegister::getName() const
     return this->name;
 }
 
-void QMvbRegister::setName(const QString name)
+void QMvbRegister::setName(const QString &name)
 {
     this->name = name;
 }

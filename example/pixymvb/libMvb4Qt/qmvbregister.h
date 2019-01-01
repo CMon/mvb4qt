@@ -99,12 +99,13 @@ public:
     void setBufferSize(const Mvb4Qt::MvbBufferSize bufferSize);
 
     qint16 getDeviceId() const;
-    void setDeviceId(const qint16 deviceId);
+    void setdeviceId();
 
     Mvb4Qt::MvbPhyMode getPhyMode() const;
     void setPhyMode(const Mvb4Qt::MvbPhyMode phyMode);
 
     const QString &getName() const;
+    void setName(const QString name);
 
 private:
     /*
@@ -122,7 +123,6 @@ private:
     bool addAttribute(QString key, QString value);
     const QString &getAttribute(QString key) const;
     const QMap<QString, QString> &getAllAttribute() const;
-    void setName(const QString &name);
 
 private:
     QString name;
