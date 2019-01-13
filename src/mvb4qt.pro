@@ -1,10 +1,9 @@
 QT -= gui
 
-# CONFIG += c++11 console
-# CONFIG -= app_bundle
-
 TEMPLATE = lib
 CONFIG += staticLib
+#TEMPLATE = app
+#CONFIG += c++ console
 TARGET = Mvb4Qt
 
 # The following define makes your compiler emit warnings if you use
@@ -28,7 +27,9 @@ SOURCES += \
     qoffsetlittleendianprotocol.cpp \
     qmvbregister.cpp \
     qmvbcardmanager.cpp \
-    qrandommvbdriver.cpp
+    qrandommvbdriver.cpp \
+    qnormalmvbdriver.cpp
+#    main.cpp
 
 HEADERS += \
     mvb4qt.h \
@@ -42,4 +43,5 @@ HEADERS += \
     qoffsetlittleendianprotocol.h \
     qmvbregister.h \
     qmvbcardmanager.h \
-    qrandommvbdriver.h
+    qrandommvbdriver.h \
+    qnormalmvbdriver.h

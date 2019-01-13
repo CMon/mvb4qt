@@ -2,7 +2,7 @@
 *.slo
 *.lo
 *.o
-*.a
+# *.a
 *.la
 *.lai
 *.so
@@ -41,3 +41,6 @@ target_wrapper.*
 
 # QtCreator CMake
 CMakeLists.txt.user*
+
+# Added by Deng Ran
+*.vsd

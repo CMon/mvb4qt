@@ -41,6 +41,9 @@ public:
      * Return   Return a list of mvb ports.
      */
     QList<QMvbPort *> getPortList() const;
+    QList<QMvbPort *> getSourcePortList() const;
+    QList<QMvbPort *> getSinkPortList() const;
+    QList<QMvbPort *> getVirtualPortList() const;
 
     /*
      * Brief    Get the mvb port by the port number, if the port number doesn't exist, return null.
@@ -99,13 +102,17 @@ public:
     void setBufferSize(const Mvb4Qt::MvbBufferSize bufferSize);
 
     qint16 getDeviceId() const;
-    void setdeviceId();
+    void setDeviceId(const qint16 deviceId);
 
     Mvb4Qt::MvbPhyMode getPhyMode() const;
     void setPhyMode(const Mvb4Qt::MvbPhyMode phyMode);
 
     const QString &getName() const;
-    void setName(const QString name);
+
+    qint16 getPortSum() const;
+    qint16 getSinkPortSum() const;
+    qint16 getSourcePortSum() const;
+    qint16 getVirtualPortSum() const;
 
 private:
     /*
@@ -120,9 +127,14 @@ private:
      */
     bool addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle = 32, QString group = "all");
 
+
+    quint16 getPortSum(Mvb4Qt::MvbPortType type) const;
+
     bool addAttribute(QString key, QString value);
     const QString &getAttribute(QString key) const;
     const QMap<QString, QString> &getAllAttribute() const;
+    void setName(const QString &name);
+    QList<QMvbPort *> getPortList(const Mvb4Qt::MvbPortType type) const;
 
 private:
     QString name;

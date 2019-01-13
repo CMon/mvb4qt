@@ -2,6 +2,8 @@
 #include "qmvbcard.h"
 #include "qabstractmvbdriver.h"
 #include "qabstractmvbprotocol.h"
+#include "qnormalmvbdriver.h"
+#include "qlittleendianprotocol.h"
 #include "qmvbport.h"
 
 QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtocol *protocol)
@@ -12,8 +14,25 @@ QMvbCard::QMvbCard(QString name, QAbstractMvbDriver *driver, QAbstractMvbProtoco
     this->mvbRegister = new QMvbRegister();
     this->mvbRegister->setName(name);
 
-    this->driver = driver;
-    this->protocol = protocol;
+    // the mvb driver
+    if (driver == nullptr)
+    {
+        this->driver = driver;
+    }
+    else
+    {
+        this->driver = new QNormalMvbDriver();
+    }
+
+    // the protocol
+    if (protocol == nullptr)
+    {
+        this->protocol = protocol;
+    }
+    else
+    {
+       this->protocol = new QLittleEndianProtocol();
+    }
 
     this->timer = new QTimer(); // the timer belong to main thread at this time.
     this->timer->setInterval(100);  // the default value is 100ms
@@ -365,6 +384,8 @@ void QMvbCard::updateCard()
             qDebug() << info << QThread::currentThreadId();
         }
     }
+
+    emit this->refreshed(this->mvbRegister->getName());
 }
 
 QMvbRegister *QMvbCard::getMvbRegister()

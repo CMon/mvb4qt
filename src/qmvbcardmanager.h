@@ -47,6 +47,10 @@ public:
      */
     QMvbCard *getMvbCard(const QString name) const;
 
+    QList<QMvbCard *> getAllCard() const;
+    QList<QString> getAllCardName() const;
+    qint16 getCardSum() const;
+
 private:
     /*
      * Brief    The constructor of the class, it is private for singleton mode.
