@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     QMvbCardManager *manager = QMvbCardManager::getManager();
     QMvbCard *card = manager->addMvbCard("random", new QRandomMvbDriver(), new QLittleEndianProtocol());
 
+    card->getMvbRegister()->setDeviceId(0x01);
     card->getMvbRegister()->setPhyMode(Mvb4Qt::MvbEmdMode);
     card->getMvbRegister()->setBufferSize(Mvb4Qt::MaxMvbBuffer);
 

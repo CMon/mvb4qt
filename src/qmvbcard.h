@@ -136,6 +136,9 @@ public slots:
      */
     void setInterval(const qint32 interval);
 
+signals:
+    void refreshed(const QString cardName);
+
 private:
     explicit QMvbCard(QString name,
                         QAbstractMvbDriver *driver = nullptr,

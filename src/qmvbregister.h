@@ -41,6 +41,9 @@ public:
      * Return   Return a list of mvb ports.
      */
     QList<QMvbPort *> getPortList() const;
+    QList<QMvbPort *> getSourcePortList() const;
+    QList<QMvbPort *> getSinkPortList() const;
+    QList<QMvbPort *> getVirtualPortList() const;
 
     /*
      * Brief    Get the mvb port by the port number, if the port number doesn't exist, return null.
@@ -106,6 +109,11 @@ public:
 
     const QString &getName() const;
 
+    qint16 getPortSum() const;
+    qint16 getSinkPortSum() const;
+    qint16 getSourcePortSum() const;
+    qint16 getVirtualPortSum() const;
+
 private:
     /*
      * Brief    Add a mvb port to the register.
@@ -119,10 +127,14 @@ private:
      */
     bool addPort(const qint16 number, const qint16 size, const Mvb4Qt::MvbPortType type, const quint16 cycle = 32, QString group = "all");
 
+
+    quint16 getPortSum(Mvb4Qt::MvbPortType type) const;
+
     bool addAttribute(QString key, QString value);
     const QString &getAttribute(QString key) const;
     const QMap<QString, QString> &getAllAttribute() const;
     void setName(const QString &name);
+    QList<QMvbPort *> getPortList(const Mvb4Qt::MvbPortType type) const;
 
 private:
     QString name;

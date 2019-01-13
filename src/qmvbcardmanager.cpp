@@ -84,6 +84,21 @@ QMvbCard *QMvbCardManager::getMvbCard(const QString name) const
     {
         qDebug() << "the card name of"  << name << "already exists" << _MVB4QT_LIB_INFO;
 
-        return false;
+        return nullptr;
     }
+}
+
+QList<QMvbCard *> QMvbCardManager::getAllCard() const
+{
+    return this->cardMap.values();
+}
+
+QList<QString> QMvbCardManager::getAllCardName() const
+{
+    return this->cardMap.keys();
+}
+
+qint16 QMvbCardManager::getCardSum() const
+{
+    return this->cardMap.size();
 }

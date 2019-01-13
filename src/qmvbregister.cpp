@@ -228,3 +228,68 @@ void QMvbRegister::setName(const QString &name)
 {
     this->name = name;
 }
+
+qint16 QMvbRegister::getPortSum() const
+{
+    return this->portMap.size();
+}
+
+qint16 QMvbRegister::getSinkPortSum() const
+{
+    return this->getPortSum(Mvb4Qt::MvbSinkPort);
+}
+
+qint16 QMvbRegister::getSourcePortSum() const
+{
+    return this->getPortSum(Mvb4Qt::MvbSourcePort);
+}
+
+qint16 QMvbRegister::getVirtualPortSum() const
+{
+    return this->getPortSum(Mvb4Qt::MvbVirtualPort);
+}
+
+quint16 QMvbRegister::getPortSum(Mvb4Qt::MvbPortType type) const
+{
+    qint16 counter = 0;
+
+    foreach (QMvbPort *port, this->portMap.values())
+    {
+        if (port->getType() == type)
+        {
+            counter ++;
+        }
+    }
+
+    return counter;
+}
+
+QList<QMvbPort *> QMvbRegister::getSourcePortList() const
+{
+    return this->getPortList(Mvb4Qt::MvbSourcePort);
+}
+
+QList<QMvbPort *> QMvbRegister::getSinkPortList() const
+{
+    return this->getPortList(Mvb4Qt::MvbSinkPort);
+}
+
+QList<QMvbPort *> QMvbRegister::getVirtualPortList() const
+{
+    return this->getPortList(Mvb4Qt::MvbVirtualPort);
+}
+
+QList<QMvbPort *> QMvbRegister::getPortList(const Mvb4Qt::MvbPortType type) const
+{
+    QList<QMvbPort *> list;
+
+    foreach (QMvbPort *port, this->portMap.values())
+    {
+        if (port->getType() == type)
+        {
+            list << port;
+        }
+    }
+
+    return list;
+}

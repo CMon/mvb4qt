@@ -17,15 +17,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/./ -lMvb4Qt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/./ -lMvb4Qtd
-else:unix: LIBS += -L$$PWD/./ -lMvb4Qt
 
-INCLUDEPATH += $$PWD/.
-DEPENDPATH += $$PWD/.
+unix:!macx|win32: LIBS += -L$$PWD/libMvb4Qt/ -lMvb4Qt
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/./libMvb4Qt.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/./libMvb4Qtd.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/./Mvb4Qt.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/./Mvb4Qtd.lib
-else:unix: PRE_TARGETDEPS += $$PWD/./libMvb4Qt.a
+INCLUDEPATH += $$PWD/libMvb4Qt
+DEPENDPATH += $$PWD/libMvb4Qt
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/libMvb4Qt/Mvb4Qt.lib
+else:unix:!macx|win32-g++: PRE_TARGETDEPS += $$PWD/libMvb4Qt/libMvb4Qt.a

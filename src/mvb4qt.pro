@@ -2,6 +2,8 @@ QT -= gui
 
 TEMPLATE = lib
 CONFIG += staticLib
+#TEMPLATE = app
+#CONFIG += c++ console
 TARGET = Mvb4Qt
 
 # The following define makes your compiler emit warnings if you use
@@ -27,6 +29,7 @@ SOURCES += \
     qmvbcardmanager.cpp \
     qrandommvbdriver.cpp \
     qnormalmvbdriver.cpp
+#    main.cpp
 
 HEADERS += \
     mvb4qt.h \

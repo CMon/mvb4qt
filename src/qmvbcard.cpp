@@ -384,6 +384,8 @@ void QMvbCard::updateCard()
             qDebug() << info << QThread::currentThreadId();
         }
     }
+
+    emit this->refreshed(this->mvbRegister->getName());
 }
 
 QMvbRegister *QMvbCard::getMvbRegister()
