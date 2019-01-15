@@ -2,6 +2,7 @@
 ![logo](./docs/logo.png)
 ## Introduction
 **Mvb4Qt** is a lightweight library for multi-functional vehicle bus, which can help users to quickly implement MVB communication development under the Qt framework. This library is highly efficient and stable, and can be used for laboratory test as well as for production environment.
+![block](./docs/block-en.png)
 ## Features
 * Non-blocking MVB communication
 * Multi-threaded communication management
