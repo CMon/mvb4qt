@@ -2,7 +2,6 @@
 ![logo](./docs/logo.png)
 ## Introduction
 **Mvb4Qt** is a lightweight library for multi-functional vehicle bus, which can help users to quickly implement MVB communication development under the Qt framework. This library is highly efficient and stable, and can be used for laboratory test as well as for production environment.
-![block](./docs/block-en.png)
 ## Features
 * Non-blocking MVB communication
 * Multi-threaded communication management
@@ -11,6 +10,7 @@
 * Support customized driver
 * Support customized protocol
 * Support Qt4 and Qt5
+![block](./docs/block-en.png)
 ## How to build?
 If you have Qt Creator installed in your environment, open the project via src/mvb4qt.pro file. If you can only build from the command line, follow the instructions below. After the build is successful, please copy the compiled library file(.a or .lib) and all the header files to the corresponding location in your environment.
 ```console
