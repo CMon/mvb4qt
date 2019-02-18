@@ -29,14 +29,16 @@ SOURCES += \
     qmvbcardviewer.cpp \
     qmvbregisterviewer.cpp \
     qmvbportviewer.cpp \
-    qporttablewidget.cpp
+    qporttablewidget.cpp \
+    mvbconfig.cpp
 
 HEADERS += \
         qmvbcardmanagerviewer.h \
     qmvbcardviewer.h \
     qmvbregisterviewer.h \
     qmvbportviewer.h \
-    qporttablewidget.h
+    qporttablewidget.h \
+    mvbconfig.h
 
 FORMS +=
 

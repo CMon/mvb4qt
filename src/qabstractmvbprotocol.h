@@ -69,6 +69,13 @@ public:
     virtual quint32 getQuint32(const quint8 *data, const quint8 byte) const = 0;
     virtual void setQuint32(quint8 *data, const quint8 byte, const quint32 value) = 0;
 
+    virtual quint16 getWord(const quint8 *data, const quint8 wordAddress) const;
+    virtual void setWord(const quint8 *data, const quint8 wordAddress, quint16 value);
+    virtual quint8 getByte(const quint8 *data, const quint8 byteAddress) const;
+    virtual void setByte(const quint8 *data, const quint8 byteAddress, quint8 value);
+    virtual bool getBit(const quint8 *data, const quint8 byteAddress, const quint8 bitAddress) const;
+    virtual void setBit(const quint8 *data, const quint8 byteAddress, const quint8 bitAddress, const bool value);
+
 protected:
     Mvb4Qt::EndianMode endianMode;
 };

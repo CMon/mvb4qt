@@ -29,7 +29,6 @@ SOURCES += \
     qmvbcardmanager.cpp \
     qrandommvbdriver.cpp \
     qnormalmvbdriver.cpp
-#    main.cpp
 
 HEADERS += \
     mvb4qt.h \

@@ -7,6 +7,7 @@
 class QComboBox;
 class QPushButton;
 class QMvbCardViewer;
+class QTimer;
 
 namespace Ui {
 class QMvbCardManagerViewer;
@@ -27,7 +28,7 @@ public slots:
     void on_btnStop_clicked();
     void on_cbCard_currentTextChanged(const QString &text);
     void showEvent(QShowEvent *event);
-    void statusChanged(const QString name);
+    void updateViewer();
 signals:
 
 private:
@@ -37,6 +38,7 @@ private:
     QComboBox *cbCard;
     QPushButton *btnStart;
     QPushButton *btnStop;
+    QTimer *timer;
 };
 
 #endif // QMVBCARDMANAGERVIEWER_H

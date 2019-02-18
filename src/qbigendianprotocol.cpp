@@ -29,7 +29,7 @@ bool QBigEndianProtocol::getBool(const quint8 *data, const quint8 byte, const qu
     }
     else
     {
-        return *(data + byte) & (0x01 << bit) != 0 ? true : false;
+        return ((*(data + byte) & (0x01 << bit)) != 0) ? true : false;
     }
 }
 

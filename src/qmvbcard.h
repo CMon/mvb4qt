@@ -96,6 +96,10 @@ public:
     void setQuint16(const qint16 number, const quint8 byte, const quint16 value);
     quint32 getQuint32(const qint16 number, const quint8 byte);
     void setQuint32(const qint16 number, const quint8 byte, const quint32 value);
+    quint8 getByte() const;
+    void setByte(const bool bit);
+    bool getBit() const;
+    void setBit(const bool bit);
 
 public slots:
     /*
@@ -140,9 +144,7 @@ signals:
     void refreshed(const QString cardName);
 
 private:
-    explicit QMvbCard(QString name,
-                        QAbstractMvbDriver *driver = nullptr,
-                            QAbstractMvbProtocol *protocol = nullptr);
+    explicit QMvbCard(QString name, QAbstractMvbDriver *driver = nullptr, QAbstractMvbProtocol *protocol = nullptr);
 
 private:
     QMvbRegister *mvbRegister;
